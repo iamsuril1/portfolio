@@ -1,0 +1,128 @@
+/* General Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #282c34;
+    padding: 1rem 2rem;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .logo h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    position: relative;
+    font-size: 18px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Hover effect with color change */
+  .nav-link:hover {
+    color: #61dafb;
+    transform: scale(1.1);
+  }
+  
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: #61dafb;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Hamburger menu styles */
+  .hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+  }
+  
+  .hamburger-menu .line {
+    width: 100%;
+    height: 4px;
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+  
+  /* When hamburger menu is active, change lines */
+  .hamburger-menu .line.active:nth-child(1) {
+    transform: rotate(45deg);
+    position: relative;
+    top: 8px;
+  }
+  
+  .hamburger-menu .line.active:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger-menu .line.active:nth-child(3) {
+    transform: rotate(-45deg);
+    position: relative;
+    top: -8px;
+  }
+  
+  /* Mobile Menu toggle */
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-links.active {
+    display: block;
+    position: absolute;
+    top: 70px; /* Adjust this based on navbar height */
+    right: 0;
+    background-color: #282c34;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
+  .nav-links li {
+    margin: 1rem 0;
+  }
+  
+  /* Media Queries for Mobile */
+  @media (max-width: 768px) {
+    .hamburger-menu {
+      display: flex;
+    }
+  
+    .nav-links {
+      display: none; /* Hide links on mobile by default */
+      width: 100%;
+    }
+  
+    .nav-links.active {
+      display: block;
+    }
+  
+    .nav-links li {
+      font-size: 20px;
+    }
+  }
+  

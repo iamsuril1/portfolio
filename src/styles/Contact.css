@@ -1,0 +1,129 @@
+.contact-section {
+    padding: 4rem 2rem;
+    background: #fff;
+  }
+  
+  .contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .contact-info {
+    flex: 1;
+    min-width: 280px;
+  }
+  
+  .contact-info h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #222;
+  }
+  
+  .contact-info p {
+    margin-bottom: 1.5rem;
+    color: #555;
+  }
+  
+  .contact-info ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .contact-info li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .contact-info li svg {
+    margin-right: 0.8rem;
+    color: #ff5722;
+  }
+  
+  .contact-form {
+    flex: 1;
+    min-width: 280px;
+  }
+  
+  .name-group {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .floating-label {
+    position: relative;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+  
+  .floating-label input,
+  .floating-label textarea {
+    width: 100%;
+    padding: 12px 12px 12px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    background: none;
+    transition: 0.3s ease;
+  }
+  
+  .floating-label label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    color: #999;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: 0.3s ease all;
+    background: white;
+    padding: 0 4px;
+  }
+  
+  .floating-label input:focus + label,
+  .floating-label input:not(:placeholder-shown) + label,
+  .floating-label textarea:focus + label,
+  .floating-label textarea:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 10px;
+    font-size: 0.8rem;
+    color: #ff5722;
+  }
+  
+  .floating-label textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .contact-form button {
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.6rem;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .contact-form button:hover {
+    background: #e64a19;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact-container {
+      flex-direction: column;
+    }
+  
+    .name-group {
+      flex-direction: column;
+    }
+  }
+  

@@ -1,0 +1,122 @@
+.skills-education {
+    padding: 4rem 2rem;
+    background-color: #ffffff;
+    min-height: 80vh;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #222;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Skills */
+  .skills {
+    flex: 1;
+    min-width: 280px;
+  }
+  
+  .skills h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .skill {
+    margin-bottom: 1.5rem;
+  }
+  
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  .skill-bar {
+    background: #eee;
+    border-radius: 12px;
+    height: 10px;
+    overflow: hidden;
+  }
+  
+  .skill-progress {
+    height: 100%;
+    background-color: #61dafb;
+    border-radius: 12px;
+    transition: width 0.8s ease-in-out;
+  }
+  
+  /* Education Timeline */
+  .education {
+    flex: 1;
+    min-width: 280px;
+  }
+  
+  .education h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .timeline {
+    list-style: none;
+    padding-left: 0;
+    border-left: 3px solid #61dafb;
+    margin-left: 1rem;
+  }
+  
+  .timeline li {
+    position: relative;
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .timeline-year {
+    position: absolute;
+    left: -6.5rem;
+    top: 0;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .timeline-content h4 {
+    font-size: 1.2rem;
+    color: #222;
+    margin-bottom: 0.2rem;
+  }
+  
+  .timeline-content p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .content-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .timeline-year {
+      position: static;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+  
+    .timeline {
+      border-left: none;
+    }
+  }
+  
