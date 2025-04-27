@@ -29,9 +29,9 @@ const Contact = () => {
           <h2>Contact Us</h2>
           <p>Feel free to use the form or drop us an email. Old-fashioned phone calls work too.</p>
           <ul>
-            <li><FaPhoneAlt /> 484.324.2400</li>
-            <li><FaEnvelope /> info@mediaproper.com</li>
-            <li><FaMapMarkerAlt /> 15 West 3rd St. Media, Pa. 19063</li>
+            <li><FaPhoneAlt /> +977 9803383479</li>
+            <li><FaEnvelope /> Surilpokharel4@gmail.com</li>
+            <li><FaMapMarkerAlt /> Saraswotinagar -06, Kathmandu</li>
           </ul>
         </div>
 

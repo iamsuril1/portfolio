@@ -13,7 +13,7 @@ const Home = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <h1>
-          Hello, I'm <span>Your Name</span>
+          Hello, I'm <span>Suril Pokharel</span>
         </h1>
         <motion.h2
           initial={{ opacity: 0 }}
@@ -31,7 +31,7 @@ const Home = () => {
         </motion.p>
 
         <motion.a
-          href="/assets/your-cv.pdf"
+          href="/assets/cv.docx"
           download
           className="home-btn"
           whileHover={{ scale: 1.1 }}
