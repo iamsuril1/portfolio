@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Suril Pokharel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans bg-gray-50 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <!-- Logo -->
+            <div>
+                <a href="index.html"><img src="logo.png" alt="Logo" class="h-10 w-auto"></a>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav>
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="index.html" class="text-red-600 hover:text-blue-600">Home</a></li>
+                    <li><a href="about.html" class="text-red-600 hover:text-blue-600">About</a></li>
+                    <li><a href="education.html" class="text-red-600 hover:text-blue-600">Education/Skills</a></li>
+                    <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600">Portfolio</a></li>
+                    <li><a href="services.html" class="text-red-600 hover:text-blue-600">Services</a></li>
+                    <li><a href="contact.html" class="text-red-600 hover:text-blue-600">Contact</a></li>
+                </ul>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-red-600 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <ul class="flex flex-col space-y-2 p-4">
+                <li><a href="index.html" class="text-red-600 hover:text-blue-600 block">Home</a></li>
+                <li><a href="about.html" class="text-red-600 hover:text-blue-600 block">About</a></li>
+                <li><a href="education.html" class="text-red-600 hover:text-blue-600 block">Education/Skills</a></li>
+                <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600 block">Portfolio</a></li>
+                <li><a href="services.html" class="text-red-600 hover:text-blue-600 block">Services</a></li>
+                <li><a href="contact.html" class="text-red-600 hover:text-blue-600 block">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <main class="flex-grow flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-100 px-6 md:px-20 pt-24">
+        <!-- Left Image -->
+        <div class="md:w-1/2 flex justify-center mb-10 md:mb-0">
+            <img src="suril-image.png" alt="Suril Pokharel" class="rounded-full shadow-lg w-72 md:w-80 border-4 border-red-600">
+        </div>
+
+        <!-- Right Section -->
+        <div class="md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">I'm Suril Pokharel</h1>
+            <h2 class="text-xl md:text-2xl text-gray-700 mb-8">
+                <span id="typewriter" class="border-r-2 border-red-600 pr-1"></span>
+            </h2>
+            <a href="contact.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300">
+                Contact Us
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-inner py-4 text-center text-gray-600 mt-auto">
+        <p>&copy; <span id="year"></span> Suril Pokharel. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

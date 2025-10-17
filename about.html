@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Suril Pokharel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans bg-gray-50 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <!-- Logo -->
+            <div>
+                <a href="index.html"><img src="logo.png" alt="Logo" class="h-10 w-auto"></a>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav>
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="index.html" class="text-red-600 hover:text-blue-600">Home</a></li>
+                    <li><a href="about.html" class="text-red-600 hover:text-blue-600 font-semibold border-b-2 border-red-600 pb-1">About</a></li>
+                    <li><a href="education.html" class="text-red-600 hover:text-blue-600">Education/Skills</a></li>
+                    <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600">Portfolio</a></li>
+                    <li><a href="services.html" class="text-red-600 hover:text-blue-600">Services</a></li>
+                    <li><a href="contact.html" class="text-red-600 hover:text-blue-600">Contact</a></li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-red-600 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <ul class="flex flex-col space-y-2 p-4">
+                <li><a href="index.html" class="text-red-600 hover:text-blue-600 block">Home</a></li>
+                <li><a href="about.html" class="text-red-600 hover:text-blue-600 block font-semibold">About</a></li>
+                <li><a href="education.html" class="text-red-600 hover:text-blue-600 block">Education/Skills</a></li>
+                <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600 block">Portfolio</a></li>
+                <li><a href="services.html" class="text-red-600 hover:text-blue-600 block">Services</a></li>
+                <li><a href="contact.html" class="text-red-600 hover:text-blue-600 block">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <main class="flex-grow pt-28 px-6 md:px-32 bg-gray-100">
+        <div class="max-w-4xl mx-auto text-center md:text-left pb-20"> <!-- Added padding-bottom -->
+            <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">About Me</h2>
+
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Hello! I'm <span class="text-red-600 font-semibold">Suril Pokharel</span>, a passionate 
+                <span class="text-blue-600 font-semibold">Web Developer</span>, 
+                <span class="text-blue-600 font-semibold">UI/UX Designer</span>, and 
+                <span class="text-blue-600 font-semibold">Creative Thinker</span>.
+                My goal is to turn ideas into visually stunning, functional, and user-friendly digital experiences.
+                I take pride in building websites that are not only efficient but also engaging and accessible.
+            </p>
+
+            <p class="text-gray-700 leading-relaxed mb-6">
+                I started my journey in the world of technology driven by curiosity and creativity. Over time, I have honed my skills in front-end and back-end development,
+                mastering tools like <span class="text-red-600 font-semibold">HTML</span>, 
+                <span class="text-red-600 font-semibold">CSS</span>, 
+                <span class="text-red-600 font-semibold">JavaScript</span>, and 
+                frameworks like <span class="text-red-600 font-semibold">Tailwind CSS</span> and 
+                <span class="text-red-600 font-semibold">React.js</span>. 
+                My design approach focuses on simplicity, balance, and a smooth user journey.
+            </p>
+
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Beyond coding, I’m deeply interested in content creation, brand storytelling, and visual identity design.
+                I believe that the best designs communicate powerful messages and connect emotionally with the audience.
+                I enjoy working on collaborative projects that challenge me to think differently and grow both creatively and technically.
+            </p>
+
+            <p class="text-gray-700 leading-relaxed mb-8">
+                I’m currently open to freelance opportunities, collaborations, and new projects where I can contribute
+                my skills and continue learning from talented individuals around the world. If you’re looking for a
+                passionate developer who values design, performance, and innovation — I’d love to connect.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 mb-10">
+                <p><span class="font-semibold text-red-600">Name:</span> Suril Pokharel</p>
+                <p><span class="font-semibold text-red-600">Email:</span> surilpokharel@email.com</p>
+                <p><span class="font-semibold text-red-600">Phone:</span> +977-9812345678</p>
+                <p><span class="font-semibold text-red-600">Nationality:</span> Nepali</p>
+            </div>
+
+            <div class="text-center">
+                <a href="contact.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-inner py-4 text-center text-gray-600 mt-auto">
+        <p>&copy; <span id="year"></span> Suril Pokharel. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
