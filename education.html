@@ -3,25 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Education & Skills - Suril Pokharel | Web Developer</title>
 <meta name="description" content="Explore Suril Pokharel's education and skills, including BSc in Computing, web development expertise, and professional competencies.">
 <meta name="keywords" content="Suril Pokharel, Education, Skills, Web Development, Computing, Portfolio">
 <meta name="author" content="Suril Pokharel">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:title" content="Education & Skills - Suril Pokharel | Web Developer">
+<meta property="og:description" content="Explore Suril Pokharel's education and skills, including BSc in Computing and web development expertise.">
+<meta property="og:image" content="logo.jpg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yourwebsite.com/education.html">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Education & Skills - Suril Pokharel | Web Developer">
+<meta name="twitter:description" content="Explore Suril Pokharel's education and skills, including BSc in Computing and web development expertise.">
+<meta name="twitter:image" content="logo.jpg">
+
+<link rel="canonical" href="https://yourwebsite.com/education.html">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="style.css">
 
 <style>
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease-out;
-  }
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body class="font-sans bg-gray-50 flex flex-col min-h-screen">
@@ -30,11 +40,11 @@
 <header class="bg-white shadow-md fixed w-full z-50" role="navigation" aria-label="Main Navigation">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <div><a href="index.html"><img src="logo.jpg" alt="Suril Pokharel Logo" class="h-10 w-auto"></a></div>
-        <nav>
+        <nav aria-label="Primary Navigation">
             <ul class="hidden md:flex space-x-6">
                 <li><a href="index.html" class="text-red-600 hover:text-blue-600">Home</a></li>
                 <li><a href="about.html" class="text-red-600 hover:text-blue-600">About</a></li>
-                <li><a href="education.html" class="text-red-600 hover:text-blue-600 font-semibold border-b-2 border-red-600 pb-1">Education/Skills</a></li>
+                <li><a href="education.html" class="text-red-600 hover:text-blue-600 font-semibold border-b-2 border-red-600 pb-1" aria-current="page">Education/Skills</a></li>
                 <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600">Portfolio</a></li>
                 <li><a href="services.html" class="text-red-600 hover:text-blue-600">Services</a></li>
                 <li><a href="contact.html" class="text-red-600 hover:text-blue-600">Contact</a></li>
@@ -52,7 +62,7 @@
         <ul class="flex flex-col space-y-2 p-4">
             <li><a href="index.html" class="text-red-600 hover:text-blue-600 block">Home</a></li>
             <li><a href="about.html" class="text-red-600 hover:text-blue-600 block">About</a></li>
-            <li><a href="education.html" class="text-red-600 hover:text-blue-600 block font-semibold">Education/Skills</a></li>
+            <li><a href="education.html" class="text-red-600 hover:text-blue-600 block font-semibold" aria-current="page">Education/Skills</a></li>
             <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600 block">Portfolio</a></li>
             <li><a href="services.html" class="text-red-600 hover:text-blue-600 block">Services</a></li>
             <li><a href="contact.html" class="text-red-600 hover:text-blue-600 block">Contact</a></li>
@@ -63,39 +73,43 @@
 <main class="flex-grow pt-28 px-6 md:px-20 bg-gray-100 space-y-20">
 
     <!-- Education Section -->
-    <section id="education" class="container mx-auto max-w-4xl fade-in">
-        <h2 class="text-4xl font-bold text-red-600 mb-6 text-center">Education</h2>
-        <div class="bg-gradient-to-r from-purple-100 via-pink-100 to-yellow-100 rounded-2xl shadow-lg p-8 hover:scale-105 transform transition duration-500">
-            <p class="font-semibold text-gray-800 text-lg mb-2">BSc (Hons) in Computing — Herald College Kathmandu (University of Wolverhampton)</p>
+    <section id="education" class="container mx-auto max-w-4xl fade-in" aria-labelledby="education-heading">
+        <h2 id="education-heading" class="text-4xl font-bold text-red-600 mb-6 text-center">Education</h2>
+        <article class="bg-gradient-to-r from-purple-100 via-pink-100 to-yellow-100 rounded-2xl shadow-lg p-8 hover:scale-105 transform transition duration-500">
+            <h3 class="font-semibold text-gray-800 text-lg mb-2">BSc (Hons) in Computing — Herald College Kathmandu (University of Wolverhampton)</h3>
             <p class="text-gray-500 mb-4">Expected 2026</p>
-            <div class="space-y-2 text-gray-700">
-                <p>Relevant Coursework: Web Development, Database Management, Software Engineering</p>
-                <p>Contributed to multiple real-world, team-based software development projects</p>
-            </div>
-        </div>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                <li>Relevant Coursework: Web Development, Database Management, Software Engineering</li>
+                <li>Contributed to multiple real-world, team-based software development projects</li>
+            </ul>
+        </article>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="container mx-auto max-w-4xl fade-in">
-        <h2 class="text-4xl font-bold text-blue-600 mb-6 text-center">Skills</h2>
+    <section id="skills" class="container mx-auto max-w-4xl fade-in" aria-labelledby="skills-heading">
+        <h2 id="skills-heading" class="text-4xl font-bold text-blue-600 mb-6 text-center">Skills</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- Frontend Skills -->
             <div class="bg-gradient-to-r from-green-100 via-lime-100 to-cyan-100 rounded-2xl p-6 shadow-lg hover:scale-105 transform transition duration-500 flex flex-col items-start space-y-3">
                 <h3 class="font-semibold text-gray-800 mb-2 text-left">Frontend</h3>
-                <span class="bg-red-200 text-red-800 px-3 py-1 rounded-full text-sm">HTML</span>
-                <span class="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm">CSS</span>
-                <span class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm">JavaScript</span>
-                <span class="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm">Tailwind CSS</span>
-                <span class="bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm">React.js</span>
+                <ul class="flex flex-wrap gap-2">
+                    <li class="bg-red-200 text-red-800 px-3 py-1 rounded-full text-sm">HTML</li>
+                    <li class="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm">CSS</li>
+                    <li class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm">JavaScript</li>
+                    <li class="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm">Tailwind CSS</li>
+                    <li class="bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm">React.js</li>
+                </ul>
             </div>
             <!-- Backend & Tools -->
             <div class="bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 rounded-2xl p-6 shadow-lg hover:scale-105 transform transition duration-500 flex flex-col items-start space-y-3">
                 <h3 class="font-semibold text-gray-800 mb-2 text-left">Backend & Tools</h3>
-                <span class="bg-red-200 text-red-800 px-3 py-1 rounded-full text-sm">Node.js</span>
-                <span class="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm">Express.js</span>
-                <span class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm">MySQL / MongoDB</span>
-                <span class="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm">Git / GitHub</span>
-                <span class="bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm">VS Code</span>
+                <ul class="flex flex-wrap gap-2">
+                    <li class="bg-red-200 text-red-800 px-3 py-1 rounded-full text-sm">Node.js</li>
+                    <li class="bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm">Express.js</li>
+                    <li class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm">MySQL / MongoDB</li>
+                    <li class="bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm">Git / GitHub</li>
+                    <li class="bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm">VS Code</li>
+                </ul>
             </div>
         </div>
     </section>

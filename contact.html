@@ -3,29 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact - Suril Pokharel</title>
+
+  <title>Contact Suril Pokharel | Web Developer in Nepal</title>
+  <meta name="description" content="Contact Suril Pokharel, a professional web developer in Kathmandu, Nepal. Get in touch for web design, development, and digital solutions." />
+  <meta name="keywords" content="Suril Pokharel, web developer Nepal, contact web developer, Kathmandu developer, portfolio contact" />
+  <meta name="author" content="Suril Pokharel" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Contact Suril Pokharel | Web Developer in Nepal" />
+  <meta property="og:description" content="Get in touch with Suril Pokharel for web development, design, and digital projects in Kathmandu, Nepal." />
+  <meta property="og:image" content="logo.jpg" />
+  <meta property="og:url" content="https://yourwebsite.com/contact.html" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact Suril Pokharel | Web Developer in Nepal" />
+  <meta name="twitter:description" content="Get in touch with Suril Pokharel for web development, design, and digital projects in Kathmandu, Nepal." />
+  <meta name="twitter:image" content="logo.jpg" />
+
+  <link rel="canonical" href="https://yourwebsite.com/contact.html" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body class="font-sans bg-gray-50 flex flex-col min-h-screen">
+
   <!-- Navbar -->
   <header class="bg-white shadow-md fixed w-full z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
       <a href="index.html">
-        <img src="logo.jpg" alt="Logo" class="h-10 w-auto" />
+        <img src="logo.jpg" alt="Suril Pokharel Logo" class="h-10 w-auto" />
       </a>
-      <nav>
+      <nav aria-label="Main Navigation">
         <ul class="hidden md:flex space-x-6">
           <li><a href="index.html" class="text-red-600 hover:text-blue-500">Home</a></li>
           <li><a href="about.html" class="text-red-600 hover:text-blue-500">About</a></li>
           <li><a href="education.html" class="text-red-600 hover:text-blue-500">Education/Skills</a></li>
           <li><a href="portfolio.html" class="text-red-600 hover:text-blue-500">Portfolio</a></li>
           <li><a href="services.html" class="text-red-600 hover:text-blue-500">Services</a></li>
-          <li><a href="contact.html" class="text-red-600 hover:text-blue-500 font-semibold border-b-2 border-red-600 pb-1">Contact</a></li>
+          <li><a href="contact.html" class="text-red-600 hover:text-blue-500 font-semibold border-b-2 border-red-600 pb-1" aria-current="page">Contact</a></li>
         </ul>
         <div class="md:hidden">
-          <button id="menu-btn" class="text-red-600 focus:outline-none">
+          <button id="menu-btn" class="text-red-600 focus:outline-none" aria-label="Toggle Menu">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -42,7 +64,7 @@
         <li><a href="education.html" class="text-red-600 hover:text-blue-500 block">Education/Skills</a></li>
         <li><a href="portfolio.html" class="text-red-600 hover:text-blue-500 block">Portfolio</a></li>
         <li><a href="services.html" class="text-red-600 hover:text-blue-500 block">Services</a></li>
-        <li><a href="contact.html" class="text-red-600 hover:text-blue-500 block font-semibold">Contact</a></li>
+        <li><a href="contact.html" class="text-red-600 hover:text-blue-500 block font-semibold" aria-current="page">Contact</a></li>
       </ul>
     </div>
   </header>
@@ -50,18 +72,19 @@
   <!-- Contact Section -->
   <main class="flex-grow pt-28 px-6 md:px-20 flex items-center justify-center bg-gradient-to-br from-red-100 via-blue-50 to-gray-100">
     <div class="max-w-5xl w-full bg-white rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-2 overflow-hidden">
+
       <!-- Left Section -->
-      <div class="bg-red-600 text-white p-10 flex flex-col justify-center items-center text-center">
-        <h2 class="text-4xl font-bold mb-4">Let's Chat</h2>
+      <section class="bg-red-600 text-white p-10 flex flex-col justify-center items-center text-center" aria-labelledby="contact-info-heading">
+        <h2 id="contact-info-heading" class="text-4xl font-bold mb-4">Let's Chat</h2>
         <p class="text-lg mb-6 leading-relaxed max-w-sm">
           Whether you have a question, want to start a project, or simply want to connect, feel free to send me a message using the contact form.
         </p>
 
-        <div class="space-y-3 text-white text-base mb-6">
-          <p><strong>Email:</strong> surilpokharel4@gmail.com</p>
-          <p><strong>Phone:</strong> +977 9749424101</p>
+        <address class="space-y-3 text-white text-base mb-6 not-italic">
+          <p><strong>Email:</strong> <a href="mailto:surilpokharel4@gmail.com" class="underline hover:text-gray-200">surilpokharel4@gmail.com</a></p>
+          <p><strong>Phone:</strong> <a href="tel:+9779749424101" class="underline hover:text-gray-200">+977 9749424101</a></p>
           <p><strong>Location:</strong> Kathmandu, Nepal</p>
-        </div>
+        </address>
 
         <!-- CV & LinkedIn Buttons -->
         <div class="flex space-x-4 mt-4">
@@ -73,31 +96,31 @@
             <span>LinkedIn</span>
           </a>
         </div>
-      </div>
+      </section>
 
       <!-- Right Section -->
-      <div class="p-10 flex flex-col justify-center">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Contact</h2>
+      <section class="p-10 flex flex-col justify-center" aria-labelledby="contact-form-heading">
+        <h2 id="contact-form-heading" class="text-3xl font-bold text-gray-800 mb-6 text-center">Contact</h2>
         <form action="https://formspree.io/f/mkgqpevz" method="POST" class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700">Name *</label>
-            <input type="text" name="name" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
+            <label for="name" class="block text-sm font-medium text-gray-700">Name *</label>
+            <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700">Email *</label>
-            <input type="email" name="email" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
+            <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+            <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700">Company</label>
-            <input type="text" name="company" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
+            <label for="company" class="block text-sm font-medium text-gray-700">Company</label>
+            <input type="text" id="company" name="company" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700">Phone</label>
-            <input type="text" name="phone" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
+            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+            <input type="text" id="phone" name="phone" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700">Message</label>
-            <textarea name="message" rows="4" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+            <textarea id="message" name="message" rows="4" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
           </div>
           <div class="flex justify-center mt-4">
             <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-2 rounded-md shadow-md transition duration-300">
@@ -105,9 +128,8 @@
             </button>
           </div>
         </form>
-        <!-- Added spacing below form -->
-        <div class="mt-8"></div>
-      </div>
+      </section>
+
     </div>
   </main>
 
@@ -117,5 +139,9 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    // Update year dynamically
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

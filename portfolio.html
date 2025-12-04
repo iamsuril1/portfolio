@@ -1,123 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Suril Pokharel</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portfolio - Suril Pokharel | Web Developer</title>
+<meta name="description" content="Explore the portfolio of Suril Pokharel, featuring web development projects built with React, Node.js, MongoDB, Tailwind CSS, and more.">
+<meta name="keywords" content="Suril Pokharel, Portfolio, Web Developer, React.js, Node.js, Tailwind CSS, MongoDB">
+<meta name="author" content="Suril Pokharel">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yourwebsite.com/portfolio.html">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content="Portfolio - Suril Pokharel | Web Developer">
+<meta property="og:description" content="Explore the portfolio of Suril Pokharel, featuring web development projects built with React, Node.js, MongoDB, Tailwind CSS, and more.">
+<meta property="og:image" content="logo.jpg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yourwebsite.com/portfolio.html">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Portfolio - Suril Pokharel | Web Developer">
+<meta name="twitter:description" content="Explore the portfolio of Suril Pokharel, featuring web development projects built with React, Node.js, MongoDB, Tailwind CSS, and more.">
+<meta name="twitter:image" content="logo.jpg">
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 <body class="font-sans bg-gray-50 flex flex-col min-h-screen">
 
-    <!-- Navbar -->
-    <header class="bg-white shadow-md fixed w-full z-50">
-        <div class="container mx-auto flex justify-between items-center py-4 px-6">
-            
-            <div>
-                <a href="index.html"><img src="logo.jpg" alt="Logo" class="h-10 w-auto"></a>
-            </div>
-
-            <!-- Desktop Nav -->
-            <nav>
-                <ul class="hidden md:flex space-x-6">
-                    <li><a href="index.html" class="text-red-600 hover:text-blue-600">Home</a></li>
-                    <li><a href="about.html" class="text-red-600 hover:text-blue-600">About</a></li>
-                    <li><a href="education.html" class="text-red-600 hover:text-blue-600">Education/Skills</a></li>
-                    <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600 font-semibold border-b-2 border-red-600 pb-1">Portfolio</a></li>
-                    <li><a href="services.html" class="text-red-600 hover:text-blue-600">Services</a></li>
-                    <li><a href="contact.html" class="text-red-600 hover:text-blue-600">Contact</a></li>
-                </ul>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button id="menu-btn" class="text-red-600 focus:outline-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-                </div>
-            </nav>
+<!-- Navbar -->
+<header class="bg-white shadow-md fixed w-full z-50" role="navigation" aria-label="Main Navigation">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+        <div>
+            <a href="index.html"><img src="logo.jpg" alt="Suril Pokharel Logo" class="h-10 w-auto"></a>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-            <ul class="flex flex-col space-y-2 p-4">
-                <li><a href="index.html" class="text-red-600 hover:text-blue-600 block">Home</a></li>
-                <li><a href="about.html" class="text-red-600 hover:text-blue-600 block">About</a></li>
-                <li><a href="education.html" class="text-red-600 hover:text-blue-600 block">Education/Skills</a></li>
-                <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600 block font-semibold">Portfolio</a></li>
-                <li><a href="services.html" class="text-red-600 hover:text-blue-600 block">Services</a></li>
-                <li><a href="contact.html" class="text-red-600 hover:text-blue-600 block">Contact</a></li>
+        <!-- Desktop Nav -->
+        <nav aria-label="Primary Navigation">
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="index.html" class="text-red-600 hover:text-blue-600">Home</a></li>
+                <li><a href="about.html" class="text-red-600 hover:text-blue-600">About</a></li>
+                <li><a href="education.html" class="text-red-600 hover:text-blue-600">Education/Skills</a></li>
+                <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600 font-semibold border-b-2 border-red-600 pb-1" aria-current="page">Portfolio</a></li>
+                <li><a href="services.html" class="text-red-600 hover:text-blue-600">Services</a></li>
+                <li><a href="contact.html" class="text-red-600 hover:text-blue-600">Contact</a></li>
             </ul>
-        </div>
-    </header>
 
-    <!-- Portfolio Section -->
-    <main class="flex-grow pt-28 px-6 md:px-20 bg-gray-100">
-        <div class="container mx-auto max-w-6xl text-center">
-            <h2 class="text-4xl font-bold text-gray-800 mb-10">My Projects</h2>
-
-            <!-- Projects Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Project Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                    <div class="bg-gradient-to-r from-red-600 to-blue-600 h-2"></div>
-                    <div class="p-6 flex flex-col h-full">
-                        <h3 class="text-2xl font-semibold text-red-600 mb-2">Task Management System</h3>
-                        <p class="text-gray-500 text-sm mb-3">React.js | Node.js | MongoDB | 2025</p>
-                        <ul class="text-gray-700 text-left list-disc list-inside space-y-1 flex-grow">
-                            <li>Developed a full-stack system to digitize task management processes.</li>
-                            <li>Integrated real-time MongoDB database updates and performance-optimized backend in Node.js.</li>
-                            <li>Improved scheduling efficiency, reducing manual processing time by 40%.</li>
-                        </ul>
-                        <div class="mt-6">
-                            <a href="https://github.com/iamsuril1/task-manager" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-full transition duration-300">View Project</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Example Placeholder Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                    <div class="bg-gradient-to-r from-red-600 to-blue-600 h-2"></div>
-                    <div class="p-6 flex flex-col h-full">
-                        <h3 class="text-2xl font-semibold text-red-600 mb-2">Portfolio Website</h3>
-                        <p class="text-gray-500 text-sm mb-3">HTML | Tailwind CSS | JS | 2025</p>
-                        <ul class="text-gray-700 text-left list-disc list-inside space-y-1 flex-grow">
-                            <li>Designed and developed a personal responsive portfolio website.</li>
-                            <li>Implemented typewriter effects, animated navigation, and multi-page layout.</li>
-                            <li>Focused on UI/UX accessibility and fast performance.</li>
-                        </ul>
-                        <div class="mt-6">
-                            <a href="https://github.com/iamsuril1/portfolio" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-full transition duration-300">View Project</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                    <div class="bg-gradient-to-r from-red-600 to-blue-600 h-2"></div>
-                    <div class="p-6 flex flex-col h-full">
-                        <h3 class="text-2xl font-semibold text-red-600 mb-2">Sports Booking</h3>
-                        <p class="text-gray-500 text-sm mb-3">Ongoing</p>
-                        <ul class="text-gray-700 text-left list-disc list-inside space-y-1 flex-grow">
-                            <li>Designed and developed a Sports booking System.</li>
-                            <li>Implementing a CRUD operation system, where user can book a stadium and other playing ground and owner can add ground</li>
-                            <li>Focused on UI/UX accessibility and fast performance.</li>
-                        </ul>
-                        <div class="mt-6">
-                            <a href="https://github.com/iamsuril1/portfolio" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-full transition duration-300">View Project</a>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-red-600 focus:outline-none" aria-label="Toggle Navigation Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
             </div>
-        </div>
-    </main>
+        </nav>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-white shadow-inner py-4 text-center text-gray-600 mt-auto">
-        <p>&copy; <span id="year"></span> Suril Pokharel. All Rights Reserved.</p>
-    </footer>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+        <ul class="flex flex-col space-y-2 p-4">
+            <li><a href="index.html" class="text-red-600 hover:text-blue-600 block">Home</a></li>
+            <li><a href="about.html" class="text-red-600 hover:text-blue-600 block">About</a></li>
+            <li><a href="education.html" class="text-red-600 hover:text-blue-600 block">Education/Skills</a></li>
+            <li><a href="portfolio.html" class="text-red-600 hover:text-blue-600 block font-semibold" aria-current="page">Portfolio</a></li>
+            <li><a href="services.html" class="text-red-600 hover:text-blue-600 block">Services</a></li>
+            <li><a href="contact.html" class="text-red-600 hover:text-blue-600 block">Contact</a></li>
+        </ul>
+    </div>
+</header>
 
-    <script src="script.js"></script>
+<!-- Portfolio Section -->
+<main class="flex-grow pt-28 px-6 md:px-20 bg-gray-100">
+    <div class="container mx-auto max-w-6xl text-center">
+        <h1 class="text-4xl font-bold text-gray-800 mb-10">My Projects</h1>
+
+        <!-- Projects Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" aria-label="Portfolio Projects">
+
+            <!-- Project Card -->
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="bg-gradient-to-r from-red-600 to-blue-600 h-2"></div>
+                <div class="p-6 flex flex-col h-full">
+                    <h2 class="text-2xl font-semibold text-red-600 mb-2">Task Management System</h2>
+                    <p class="text-gray-500 text-sm mb-3">React.js | Node.js | MongoDB | 2025</p>
+                    <ul class="text-gray-700 text-left list-disc list-inside space-y-1 flex-grow">
+                        <li>Developed a full-stack system to digitize task management processes.</li>
+                        <li>Integrated real-time MongoDB database updates and performance-optimized backend in Node.js.</li>
+                        <li>Improved scheduling efficiency, reducing manual processing time by 40%.</li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://github.com/iamsuril1/task-manager" target="_blank" rel="noopener" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-full transition duration-300">View Project</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Portfolio Website Card -->
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="bg-gradient-to-r from-red-600 to-blue-600 h-2"></div>
+                <div class="p-6 flex flex-col h-full">
+                    <h2 class="text-2xl font-semibold text-red-600 mb-2">Portfolio Website</h2>
+                    <p class="text-gray-500 text-sm mb-3">HTML | Tailwind CSS | JS | 2025</p>
+                    <ul class="text-gray-700 text-left list-disc list-inside space-y-1 flex-grow">
+                        <li>Designed and developed a personal responsive portfolio website.</li>
+                        <li>Implemented typewriter effects, animated navigation, and multi-page layout.</li>
+                        <li>Focused on UI/UX accessibility and fast performance.</li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://github.com/iamsuril1/portfolio" target="_blank" rel="noopener" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-full transition duration-300">View Project</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sports Booking Card -->
+            <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                <div class="bg-gradient-to-r from-red-600 to-blue-600 h-2"></div>
+                <div class="p-6 flex flex-col h-full">
+                    <h2 class="text-2xl font-semibold text-red-600 mb-2">Sports Booking</h2>
+                    <p class="text-gray-500 text-sm mb-3">Ongoing</p>
+                    <ul class="text-gray-700 text-left list-disc list-inside space-y-1 flex-grow">
+                        <li>Designed and developed a Sports booking system with CRUD functionality.</li>
+                        <li>Users can book stadiums and grounds; owners can add and manage grounds.</li>
+                        <li>Focused on UI/UX accessibility and fast performance.</li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://github.com/iamsuril1/portfolio" target="_blank" rel="noopener" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-full transition duration-300">View Project</a>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-white shadow-inner py-4 text-center text-gray-600 mt-auto">
+    <p>&copy; <span id="year"></span> Suril Pokharel. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // Footer Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile Menu Toggle
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>
 </body>
 </html>
