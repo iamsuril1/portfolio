@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suril Pokharel — Full Stack Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ironDark:   '#0A0A0F',
+            ironMid:    '#12121A',
+            ironBorder: '#1E1E2E',
+            gold:       '#FFD700',
+            goldMid:    '#FFA500',
+            ironRed:    '#C0001A',
+            ironRedBright: '#FF0022',
+            arcBlue:    '#00CFFF',
+            arcGlow:    '#7FECFF',
+            cream:      '#E8DCC8',
+            stone:      '#4A4A5E',
+            stoneMid:   '#7B7B9E',
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background-color: #0A0A0F; color: #E8DCC8; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0A0A0F; }
+    ::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 2px; }
+
+    /* ─── LOADER ─── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0A0A0F;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 28px;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+
+    .arc-reactor {
+      position: relative;
+      width: 140px; height: 140px;
+    }
+    .arc-reactor svg { width: 100%; height: 100%; }
+
+    /* Reactor rings spin */
+    .ring-outer { animation: spinCW 4s linear infinite; transform-origin: 70px 70px; }
+    .ring-mid   { animation: spinCCW 3s linear infinite; transform-origin: 70px 70px; }
+    .ring-inner { animation: spinCW 2s linear infinite; transform-origin: 70px 70px; }
+
+    @keyframes spinCW  { from{transform:rotate(0deg)}  to{transform:rotate(360deg)} }
+    @keyframes spinCCW { from{transform:rotate(0deg)}  to{transform:rotate(-360deg)} }
+
+    /* Core pulse */
+    .arc-core { animation: corePulse 1.4s ease-in-out infinite; }
+    @keyframes corePulse {
+      0%,100% { opacity: 1; r: 18; }
+      50%      { opacity: 0.6; r: 22; }
+    }
+
+    /* Glow pulse */
+    .arc-glow { animation: glowPulse 1.4s ease-in-out infinite; }
+    @keyframes glowPulse {
+      0%,100% { opacity: 0.25; }
+      50%      { opacity: 0.55; }
+    }
+
+    .loader-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: #00CFFF;
+      text-transform: uppercase;
+    }
+    .loader-bar-wrap {
+      width: 200px; height: 2px;
+      background: #1E1E2E;
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #C0001A, #FFD700, #00CFFF);
+      border-radius: 1px;
+      width: 0%;
+      transition: width 0.15s ease;
+    }
+
+    /* ─── IRON MAN BG ─── */
+    #ironman-bg {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.5s ease 0.3s;
+    }
+    #ironman-bg.visible { opacity: 1; }
+
+    /* ─── CONTENT ─── */
+    #content {
+      position: relative; z-index: 1;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.5s;
+    }
+    #content.visible { opacity: 1; }
+
+    /* ─── CURSOR ─── */
+    .cursor { display: inline-block; width: 2px; height: 1em; background: #FFD700; margin-left: 2px; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── NAV ─── */
+    nav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+    /* ─── SKILL TAG ─── */
+    .skill-tag { transition: all 0.2s ease; }
+    .skill-tag:hover { background: #FFD700; color: #0A0A0F; border-color: #FFD700; }
+
+    /* ─── PROJECT CARD ─── */
+    .project-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .project-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(255,215,0,0.08); }
+
+    /* ─── LABELS ─── */
+    .section-label { letter-spacing: 0.18em; font-size: 0.7rem; text-transform: uppercase; color: #FFD700; font-family: 'JetBrains Mono', monospace; }
+
+    /* ─── GRADIENT LINE ─── */
+    .grad-line { background: linear-gradient(90deg, #C0001A, #FFD700, transparent); height: 1px; }
+
+    /* ─── IRON MAN SUIT LINES ─── */
+    .suit-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(192,0,26,0.4), transparent);
+      height: 1px;
+    }
+
+    /* ─── ARC REACTOR SMALL (nav logo) ─── */
+    .arc-mini { display: inline-flex; align-items: center; gap: 6px; }
+    .arc-mini-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #00CFFF;
+      box-shadow: 0 0 6px #00CFFF, 0 0 12px #00CFFF;
+      animation: corePulse 1.8s ease-in-out infinite;
+    }
+
+    /* ─── REPULSOR BUTTON ─── */
+    .repulsor-btn {
+      position: relative; overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .repulsor-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0,207,255,0.15), transparent 70%);
+      opacity: 0; transition: opacity 0.25s ease;
+    }
+    .repulsor-btn:hover::before { opacity: 1; }
+
+    /* ─── GLOW TEXT ─── */
+    .gold-glow { text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+    .arc-text  { text-shadow: 0 0 14px rgba(0,207,255,0.6); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .cursor { animation: none; }
+      .ring-outer, .ring-mid, .ring-inner, .arc-core, .arc-glow { animation: none; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-name { font-size: 2.8rem !important; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ─── ARC REACTOR LOADER ─── -->
+  <div id="loader">
+    <div class="arc-reactor">
+      <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="arcGlowFilter" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="coreGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="10" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#0D1F2D"/>
+            <stop offset="100%" stop-color="#060810"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Background plate -->
+        <circle cx="70" cy="70" r="68" fill="url(#bgGrad)" stroke="#1E1E2E" stroke-width="1"/>
+
+        <!-- Outer glow ring -->
+        <circle class="arc-glow" cx="70" cy="70" r="60" fill="none" stroke="#00CFFF" stroke-width="8" opacity="0.2"/>
+
+        <!-- OUTER RING — 8 notches -->
+        <g class="ring-outer">
+          <circle cx="70" cy="70" r="54" fill="none" stroke="#1a3040" stroke-width="2"/>
+          <!-- notch marks at 45° increments -->
+          <rect x="68" y="14" width="4" height="10" rx="2" fill="#00CFFF" opacity="0.9"/>
+          <rect x="68" y="116" width="4" height="10" rx="2" fill="#00CFFF" opacity="0.9"/>
+          <rect x="14" y="68" width="10" height="4" rx="2" fill="#00CFFF" opacity="0.9"/>
+          <rect x="116" y="68" width="10" height="4" rx="2" fill="#00CFFF" opacity="0.9"/>
+          <rect x="30" y="30" width="6" height="6" rx="1" fill="#FFD700" opacity="0.7" transform="rotate(45 33 33)"/>
+          <rect x="104" y="30" width="6" height="6" rx="1" fill="#FFD700" opacity="0.7" transform="rotate(45 107 33)"/>
+          <rect x="30" y="104" width="6" height="6" rx="1" fill="#FFD700" opacity="0.7" transform="rotate(45 33 107)"/>
+          <rect x="104" y="104" width="6" height="6" rx="1" fill="#FFD700" opacity="0.7" transform="rotate(45 107 107)"/>
+          <!-- triangular segments -->
+          <path d="M70 16 L75 30 L65 30 Z" fill="#C0001A" opacity="0.7"/>
+          <path d="M70 124 L75 110 L65 110 Z" fill="#C0001A" opacity="0.7"/>
+          <path d="M16 70 L30 75 L30 65 Z" fill="#C0001A" opacity="0.7"/>
+          <path d="M124 70 L110 75 L110 65 Z" fill="#C0001A" opacity="0.7"/>
+        </g>
+
+        <!-- MID RING — triangular fins -->
+        <g class="ring-mid">
+          <circle cx="70" cy="70" r="40" fill="none" stroke="#1a3040" stroke-width="1.5"/>
+          <path d="M70 30 L76 45 L64 45 Z" fill="#FFD700" opacity="0.9"/>
+          <path d="M70 110 L76 95 L64 95 Z" fill="#FFD700" opacity="0.9"/>
+          <path d="M30 70 L45 76 L45 64 Z" fill="#FFD700" opacity="0.9"/>
+          <path d="M110 70 L95 76 L95 64 Z" fill="#FFD700" opacity="0.9"/>
+          <!-- diagonal fins -->
+          <path d="M41.7 41.7 L53.4 53.4" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+          <path d="M98.3 41.7 L86.6 53.4" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+          <path d="M41.7 98.3 L53.4 86.6" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+          <path d="M98.3 98.3 L86.6 86.6" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        </g>
+
+        <!-- INNER RING — hexagonal frame -->
+        <g class="ring-inner">
+          <circle cx="70" cy="70" r="26" fill="none" stroke="#00CFFF" stroke-width="1.5" opacity="0.5"/>
+          <!-- hex points -->
+          <circle cx="70" cy="44" r="3" fill="#FFD700"/>
+          <circle cx="70" cy="96" r="3" fill="#FFD700"/>
+          <circle cx="92.6" cy="57" r="3" fill="#FFD700"/>
+          <circle cx="92.6" cy="83" r="3" fill="#FFD700"/>
+          <circle cx="47.4" cy="57" r="3" fill="#FFD700"/>
+          <circle cx="47.4" cy="83" r="3" fill="#FFD700"/>
+        </g>
+
+        <!-- Core glow halo -->
+        <circle cx="70" cy="70" r="22" fill="#003A50" filter="url(#coreGlow)" opacity="0.5"/>
+
+        <!-- Core -->
+        <circle class="arc-core" cx="70" cy="70" r="18" fill="#00CFFF" filter="url(#arcGlowFilter)" opacity="0.95"/>
+        <circle cx="70" cy="70" r="14" fill="#7FECFF" opacity="0.8"/>
+        <circle cx="70" cy="70" r="8"  fill="#FFFFFF" opacity="0.95"/>
+        <!-- Inner star cross -->
+        <line x1="70" y1="60" x2="70" y2="80" stroke="#003A50" stroke-width="1.5" opacity="0.6"/>
+        <line x1="60" y1="70" x2="80" y2="70" stroke="#003A50" stroke-width="1.5" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="loader-text" id="loaderText">Initializing JARVIS...</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar" id="loaderBar"></div>
+    </div>
+  </div>
+
+  <!-- ─── IRON MAN BACKGROUND SVG ─── -->
+  <div id="ironman-bg">
+    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="helmetGlow" cx="50%" cy="45%" r="40%">
+          <stop offset="0%" stop-color="#C0001A" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <radialGradient id="eyeGlowL" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFD700" stop-opacity="0.95"/>
+          <stop offset="60%" stop-color="#FFA500" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <radialGradient id="eyeGlowR" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFD700" stop-opacity="0.95"/>
+          <stop offset="60%" stop-color="#FFA500" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <filter id="helmetBlur">
+          <feGaussianBlur stdDeviation="2"/>
+        </filter>
+        <filter id="eyeBlur">
+          <feGaussianBlur stdDeviation="8"/>
+        </filter>
+        <filter id="ambientGlow">
+          <feGaussianBlur stdDeviation="20"/>
+        </filter>
+        <linearGradient id="plateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1A0A0A"/>
+          <stop offset="50%" stop-color="#2A0D0D"/>
+          <stop offset="100%" stop-color="#0D0D1A"/>
+        </linearGradient>
+        <linearGradient id="goldEdge" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#7A5200"/>
+          <stop offset="30%" stop-color="#FFD700"/>
+          <stop offset="70%" stop-color="#FFA500"/>
+          <stop offset="100%" stop-color="#7A5200"/>
+        </linearGradient>
+        <linearGradient id="redPlate" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#8B0000"/>
+          <stop offset="50%" stop-color="#C0001A"/>
+          <stop offset="100%" stop-color="#6B0000"/>
+        </linearGradient>
+        <clipPath id="helmetClip">
+          <ellipse cx="720" cy="460" rx="280" ry="340"/>
+        </clipPath>
+      </defs>
+
+      <!-- Ambient background glow -->
+      <ellipse cx="720" cy="450" rx="500" ry="500" fill="url(#helmetGlow)" opacity="0.6"/>
+
+      <!-- ── IRON MAN HELMET ── -->
+      <!-- Main helmet shape - back layer (dark base) -->
+      <ellipse cx="720" cy="460" rx="240" ry="300" fill="#0D0808" opacity="0.95"/>
+
+      <!-- Helmet crown -->
+      <path d="M520 340 C520 200 600 140 720 130 C840 140 920 200 920 340 L900 360 C860 280 800 240 720 235 C640 240 580 280 540 360 Z"
+            fill="url(#redPlate)" opacity="0.92"/>
+
+      <!-- Crown highlight ridge -->
+      <path d="M680 135 C690 132 710 130 720 130 C730 130 750 132 760 135"
+            stroke="url(#goldEdge)" stroke-width="3" fill="none" opacity="0.8"/>
+
+      <!-- Forehead plate -->
+      <path d="M600 240 L720 220 L840 240 L840 310 L720 295 L600 310 Z"
+            fill="#A0001A" opacity="0.85"/>
+      <path d="M600 240 L720 220 L840 240" stroke="#FFD700" stroke-width="1.5" fill="none" opacity="0.7"/>
+
+      <!-- Forehead center ridge -->
+      <path d="M720 220 L720 295" stroke="#FFD700" stroke-width="2" opacity="0.6"/>
+
+      <!-- Cheek plates — LEFT -->
+      <path d="M520 340 C510 380 505 430 515 490 L570 510 L580 340 Z"
+            fill="url(#redPlate)" opacity="0.9"/>
+      <path d="M520 340 C510 380 505 430 515 490" stroke="#FFD700" stroke-width="2" fill="none" opacity="0.5"/>
+
+      <!-- Cheek plates — RIGHT -->
+      <path d="M920 340 C930 380 935 430 925 490 L870 510 L860 340 Z"
+            fill="url(#redPlate)" opacity="0.9"/>
+      <path d="M920 340 C930 380 935 430 925 490" stroke="#FFD700" stroke-width="2" fill="none" opacity="0.5"/>
+
+      <!-- Jaw / lower face plate -->
+      <path d="M570 510 C600 600 650 650 720 660 C790 650 840 600 870 510 L860 490 C830 580 790 620 720 630 C650 620 610 580 580 490 Z"
+            fill="url(#redPlate)" opacity="0.88"/>
+
+      <!-- Jaw gold trim -->
+      <path d="M580 490 C610 580 660 625 720 635 C780 625 830 580 860 490"
+            stroke="url(#goldEdge)" stroke-width="2" fill="none" opacity="0.65"/>
+
+      <!-- Nose bridge / face plate center -->
+      <path d="M680 310 L720 305 L760 310 L760 470 L720 480 L680 470 Z"
+            fill="#8B0000" opacity="0.8"/>
+
+      <!-- Nose piece -->
+      <path d="M705 430 L720 445 L735 430 L730 460 L720 470 L710 460 Z"
+            fill="#600010" opacity="0.9"/>
+      <path d="M705 430 L720 445 L735 430" stroke="#FFD700" stroke-width="1" fill="none" opacity="0.5"/>
+
+      <!-- Mouth grill -->
+      <rect x="680" y="475" width="80" height="8" rx="4" fill="#2A0808" opacity="0.9"/>
+      <rect x="685" y="490" width="70" height="6" rx="3" fill="#2A0808" opacity="0.9"/>
+      <rect x="690" y="503" width="60" height="6" rx="3" fill="#2A0808" opacity="0.9"/>
+      <!-- Grill lines -->
+      <line x1="700" y1="475" x2="700" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+      <line x1="715" y1="475" x2="715" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+      <line x1="730" y1="475" x2="730" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+      <line x1="745" y1="475" x2="745" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- ── EYE SOCKETS ── -->
+      <!-- Left eye socket -->
+      <path d="M582 330 C590 315 620 308 650 312 C675 315 690 328 688 345 C686 362 668 372 643 370 C615 368 578 358 582 330 Z"
+            fill="#080305" opacity="0.95"/>
+
+      <!-- Right eye socket -->
+      <path d="M858 330 C850 315 820 308 790 312 C765 315 750 328 752 345 C754 362 772 372 797 370 C825 368 862 358 858 330 Z"
+            fill="#080305" opacity="0.95"/>
+
+      <!-- Left eye GLOW halo (blur layer) -->
+      <ellipse cx="635" cy="340" rx="52" ry="28" fill="url(#eyeGlowL)" filter="url(#eyeBlur)" opacity="0.9">
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- Right eye GLOW halo (blur layer) -->
+      <ellipse cx="805" cy="340" rx="52" ry="28" fill="url(#eyeGlowR)" filter="url(#eyeBlur)" opacity="0.9">
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- Left eye lens -->
+      <path d="M584 333 C592 318 622 312 650 316 C674 319 688 331 686 346 C684 361 664 370 638 367 C610 364 580 354 584 333 Z"
+            fill="#FFD700" opacity="0.0">
+        <animate attributeName="opacity" values="0.75;1;0.75" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="fill" values="#FFD700;#FFF5A0;#FFD700" dur="2.5s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- Right eye lens -->
+      <path d="M856 333 C848 318 818 312 790 316 C766 319 752 331 754 346 C756 361 776 370 802 367 C830 364 860 354 856 333 Z"
+            fill="#FFD700" opacity="0.0">
+        <animate attributeName="opacity" values="0.75;1;0.75" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="fill" values="#FFD700;#FFF5A0;#FFD700" dur="2.5s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- Eye scan line effect (thin bright line sweeping) -->
+      <rect x="584" y="338" width="104" height="2" rx="1" fill="#FFFFFF" opacity="0">
+        <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="330;350;330" dur="2.5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="754" y="338" width="104" height="2" rx="1" fill="#FFFFFF" opacity="0">
+        <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="330;350;330" dur="2.5s" repeatCount="indefinite"/>
+      </rect>
+
+      <!-- Gold trim around eye sockets -->
+      <path d="M582 330 C590 315 620 308 650 312 C675 315 690 328 688 345"
+            stroke="#FFD700" stroke-width="2" fill="none" opacity="0.7"/>
+      <path d="M858 330 C850 315 820 308 790 312 C765 315 750 328 752 345"
+            stroke="#FFD700" stroke-width="2" fill="none" opacity="0.7"/>
+
+      <!-- Temple detail lines -->
+      <path d="M540 360 L580 340" stroke="#FFD700" stroke-width="1.5" opacity="0.4"/>
+      <path d="M900 360 L860 340" stroke="#FFD700" stroke-width="1.5" opacity="0.4"/>
+
+      <!-- Side vent slits — LEFT -->
+      <rect x="520" y="400" width="30" height="4" rx="2" fill="#FFD700" opacity="0.4"/>
+      <rect x="518" y="412" width="28" height="4" rx="2" fill="#FFD700" opacity="0.3"/>
+      <rect x="520" y="424" width="25" height="4" rx="2" fill="#FFD700" opacity="0.25"/>
+
+      <!-- Side vent slits — RIGHT -->
+      <rect x="890" y="400" width="30" height="4" rx="2" fill="#FFD700" opacity="0.4"/>
+      <rect x="894" y="412" width="28" height="4" rx="2" fill="#FFD700" opacity="0.3"/>
+      <rect x="895" y="424" width="25" height="4" rx="2" fill="#FFD700" opacity="0.25"/>
+
+      <!-- ── NECK / COLLAR ── -->
+      <path d="M610 630 L720 650 L830 630 L840 700 L720 720 L600 700 Z"
+            fill="#6B0000" opacity="0.85"/>
+      <path d="M610 630 L720 650 L830 630" stroke="url(#goldEdge)" stroke-width="2" fill="none" opacity="0.6"/>
+
+      <!-- Collar gold bolts -->
+      <circle cx="640" cy="660" r="4" fill="#FFD700" opacity="0.7"/>
+      <circle cx="720" cy="665" r="4" fill="#FFD700" opacity="0.7"/>
+      <circle cx="800" cy="660" r="4" fill="#FFD700" opacity="0.7"/>
+
+      <!-- ── OVERALL HELMET OUTLINE ── -->
+      <path d="M520 340 C510 280 540 180 600 150 C640 128 680 120 720 118 C760 120 800 128 840 150 C900 180 930 280 920 340 C935 400 940 460 925 510 C910 560 880 610 840 640 L800 665 C770 680 750 690 720 695 C690 690 670 680 640 665 L600 640 C560 610 530 560 515 510 C500 460 505 400 520 340 Z"
+            fill="none" stroke="#C0001A" stroke-width="2" opacity="0.5"/>
+
+      <!-- Outer glow edge -->
+      <path d="M520 340 C510 280 540 180 600 150 C640 128 680 120 720 118 C760 120 800 128 840 150 C900 180 930 280 920 340 C935 400 940 460 925 510 C910 560 880 610 840 640 L800 665 C770 680 750 690 720 695 C690 690 670 680 640 665 L600 640 C560 610 530 560 515 510 C500 460 505 400 520 340 Z"
+            fill="none" stroke="#FFD700" stroke-width="1" opacity="0.3" filter="url(#helmetBlur)"/>
+
+      <!-- ── HUD SCAN LINES ── scattered across background ── -->
+      <line x1="0" y1="200" x2="400" y2="200" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
+      <line x1="0" y1="400" x2="400" y2="400" stroke="#00CFFF" stroke-width="0.5" opacity="0.06"/>
+      <line x1="0" y1="600" x2="400" y2="600" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
+      <line x1="1040" y1="200" x2="1440" y2="200" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
+      <line x1="1040" y1="400" x2="1440" y2="400" stroke="#00CFFF" stroke-width="0.5" opacity="0.06"/>
+      <line x1="1040" y1="600" x2="1440" y2="600" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
+
+      <!-- HUD corner brackets — top left -->
+      <path d="M60 60 L60 120 M60 60 L120 60" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
+      <!-- top right -->
+      <path d="M1380 60 L1380 120 M1380 60 L1320 60" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
+      <!-- bottom left -->
+      <path d="M60 840 L60 780 M60 840 L120 840" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
+      <!-- bottom right -->
+      <path d="M1380 840 L1380 780 M1380 840 L1320 840" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+      <!-- HUD readout text -->
+      <text x="80" y="90" font-family="JetBrains Mono,monospace" font-size="10" fill="#00CFFF" opacity="0.3">MARK L — ONLINE</text>
+      <text x="80" y="108" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFD700" opacity="0.25">POWER: 100%</text>
+
+      <text x="1100" y="90" font-family="JetBrains Mono,monospace" font-size="10" fill="#00CFFF" opacity="0.3">JARVIS v7.0</text>
+      <text x="1100" y="108" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFD700" opacity="0.25">SUIT INTEGRITY: 100%</text>
+
+      <!-- Subtle vignette overlay -->
+      <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="100%" stop-color="#0A0A0F" stop-opacity="0.85"/>
+      </radialGradient>
+      <rect width="1440" height="900" fill="url(#vignette)"/>
+    </svg>
+  </div>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <div id="content">
+
+    <!-- NAV -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-ironDark/85 border-b border-ironBorder transition-all duration-300">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <span class="font-mono text-sm font-medium flex items-center gap-2">
+          <span class="arc-mini">
+            <span class="arc-mini-dot"></span>
+          </span>
+          <span class="text-gold">suril</span><span class="text-ironRedBright">&lt;/&gt;</span>
+        </span>
+        <ul class="hidden sm:flex items-center gap-8 text-sm font-body text-stoneMid">
+          <li><a href="#about"    class="hover:text-gold transition-colors">About</a></li>
+          <li><a href="#skills"   class="hover:text-gold transition-colors">Skills</a></li>
+          <li><a href="#projects" class="hover:text-gold transition-colors">Projects</a></li>
+          <li><a href="#contact"  class="hover:text-gold transition-colors">Contact</a></li>
+        </ul>
+        <a href="mailto:surilpokharel5@gmail.com"
+           class="hidden sm:inline-flex items-center gap-2 px-4 py-2 border border-gold text-gold text-xs font-mono rounded repulsor-btn hover:bg-gold hover:text-ironDark transition-all duration-200">
+          Hire me ↗
+        </a>
+        <button id="menuBtn" class="sm:hidden text-stoneMid hover:text-gold" aria-label="Open menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+      <div id="mobileMenu" class="hidden sm:hidden border-t border-ironBorder px-6 py-4 flex flex-col gap-4 text-sm text-stoneMid font-body">
+        <a href="#about"    class="hover:text-gold" onclick="closeMobile()">About</a>
+        <a href="#skills"   class="hover:text-gold" onclick="closeMobile()">Skills</a>
+        <a href="#projects" class="hover:text-gold" onclick="closeMobile()">Projects</a>
+        <a href="#contact"  class="hover:text-gold" onclick="closeMobile()">Contact</a>
+        <a href="mailto:surilpokharel5@gmail.com" class="text-gold">surilpokharel5@gmail.com</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero" class="relative min-h-screen flex flex-col justify-center px-6 pt-24 pb-16 max-w-6xl mx-auto">
+      <div class="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-3xl pointer-events-none" style="background:rgba(192,0,26,0.06)"></div>
+      <div class="absolute bottom-1/4 right-0 w-64 h-64 rounded-full blur-2xl pointer-events-none" style="background:rgba(255,215,0,0.04)"></div>
+
+      <div class="relative z-10 max-w-3xl">
+        <p class="section-label mb-6">Available for opportunities</p>
+
+        <h1 class="hero-name font-display font-bold text-cream gold-glow" style="font-size:clamp(2.8rem,7vw,5.5rem);line-height:1.08;letter-spacing:-0.02em;">
+          Suril<br>Pokharel<span class="text-ironRedBright">.</span>
+        </h1>
+
+        <div class="mt-5 flex items-center gap-3 font-mono text-stoneMid" style="font-size:clamp(0.85rem,2vw,1.05rem);">
+          <span class="text-gold">&gt;</span>
+          <span id="typed" class="text-cream"></span>
+          <span class="cursor"></span>
+        </div>
+
+        <p class="mt-8 max-w-lg text-stoneMid font-body leading-relaxed" style="font-size:1rem;">
+          MERN stack developer building purposeful digital products — currently bringing Nepal's farmers directly to consumers through
+          <span class="text-cream font-medium">MeroBari</span>.
+        </p>
+
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="#projects"
+             class="repulsor-btn px-6 py-3 font-display font-semibold text-sm rounded transition-colors"
+             style="background:#C0001A;color:#FFD700;border:1px solid #FFD700;">
+            View Projects
+          </a>
+          <a href="https://github.com/iamsuril1" target="_blank" rel="noopener"
+             class="repulsor-btn px-6 py-3 border border-ironBorder text-stoneMid font-display font-medium text-sm rounded hover:border-gold hover:text-cream transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .269.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-16 flex flex-wrap gap-8">
+          <div>
+            <p class="text-gold font-display font-bold text-2xl gold-glow">2+</p>
+            <p class="text-stoneMid text-xs font-mono mt-1">Years building</p>
+          </div>
+          <div class="w-px" style="background:#1E1E2E"></div>
+          <div>
+            <p class="text-gold font-display font-bold text-2xl gold-glow">MERN</p>
+            <p class="text-stoneMid text-xs font-mono mt-1">Primary stack</p>
+          </div>
+          <div class="w-px" style="background:#1E1E2E"></div>
+          <div>
+            <p class="text-gold font-display font-bold text-2xl gold-glow">KTM</p>
+            <p class="text-stoneMid text-xs font-mono mt-1">Based in Nepal</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="absolute bottom-8 left-6 flex items-center gap-3 opacity-40">
+        <div class="w-px h-10 animate-pulse" style="background:#FFD700"></div>
+        <span class="text-xs font-mono tracking-widest rotate-90 origin-left ml-6" style="color:#FFD700">scroll</span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="max-w-6xl mx-auto px-6 py-24">
+      <div class="grad-line mb-16"></div>
+      <div class="reveal grid md:grid-cols-2 gap-16 items-start">
+        <div>
+          <p class="section-label mb-4">About</p>
+          <h2 class="font-display font-bold text-cream text-3xl sm:text-4xl leading-tight mb-6">
+            Building the web,<br>one clean commit<br>at a time<span class="text-ironRedBright">.</span>
+          </h2>
+          <p class="text-stoneMid leading-relaxed mb-5">
+            I'm a full stack developer currently studying Computer Science at
+            <span class="text-cream">Herald College Kathmandu</span>. I specialise in React, Node, and MongoDB — the kind of stack that lets me move fast without cutting corners.
+          </p>
+          <p class="text-stoneMid leading-relaxed">
+            Beyond code, I mentor junior developers and obsess over UX flows that feel obvious in hindsight. When I'm not building MeroBari, I'm sharpening my DSA and looking for the next problem worth solving.
+          </p>
+          <div class="mt-8 flex items-center gap-3">
+            <a href="https://github.com/iamsuril1" target="_blank" rel="noopener"
+               class="text-sm font-mono hover:underline arc-text" style="color:#00CFFF;">github.com/iamsuril1 ↗</a>
+          </div>
+        </div>
+
+        <div class="rounded-xl p-6" style="background:#12121A;border:1px solid #1E1E2E;">
+          <p class="section-label mb-6">Education</p>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background:rgba(192,0,26,0.15);border:1px solid rgba(192,0,26,0.3);">
+              <svg class="w-4 h-4" fill="none" stroke="#C0001A" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-cream font-display font-semibold">Herald College Kathmandu</h3>
+              <p class="text-xs font-mono mt-1" style="color:#FFD700;">B.Sc. Computer Science · 2024 – Present</p>
+              <p class="text-stoneMid text-sm mt-3 leading-relaxed">
+                Naxal, Kathmandu, Nepal. Relevant coursework: Data Structures & Algorithms, Database Management Systems, Web Technologies, Software Engineering.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6" style="border-top:1px solid #1E1E2E;">
+            <p class="section-label mb-4">Leadership</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3 text-sm text-stoneMid">
+                <span class="mt-0.5" style="color:#FFD700;">—</span>
+                <span>Mentored junior devs through code reviews & pair programming</span>
+              </li>
+              <li class="flex items-start gap-3 text-sm text-stoneMid">
+                <span class="mt-0.5" style="color:#FFD700;">—</span>
+                <span>Coordinated project milestones across development cycles</span>
+              </li>
+              <li class="flex items-start gap-3 text-sm text-stoneMid">
+                <span class="mt-0.5" style="color:#FFD700;">—</span>
+                <span>Gathered and aligned on requirements with clients & stakeholders</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="max-w-6xl mx-auto px-6 py-24">
+      <div class="grad-line mb-16"></div>
+      <div class="reveal">
+        <p class="section-label mb-4">Technical Skills</p>
+        <h2 class="font-display font-bold text-cream text-3xl sm:text-4xl mb-12">
+          My stack<span class="text-ironRedBright">.</span>
+        </h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="rounded-xl p-5" style="background:#12121A;border:1px solid #1E1E2E;">
+            <p class="text-xs font-mono mb-4" style="color:#FFD700;">Languages</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">JavaScript ES6+</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">Python</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">HTML5</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">CSS3</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5" style="background:#12121A;border:1px solid #1E1E2E;">
+            <p class="text-xs font-mono mb-4" style="color:#FFD700;">Frameworks</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">React.js</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">Node.js</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">Express.js</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">Django</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">Tailwind CSS</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5" style="background:#12121A;border:1px solid #1E1E2E;">
+            <p class="text-xs font-mono mb-4" style="color:#FFD700;">Databases</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">MongoDB</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">MySQL</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5" style="background:#12121A;border:1px solid #1E1E2E;">
+            <p class="text-xs font-mono mb-4" style="color:#FFD700;">Tools</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">Git</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">GitHub</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">REST APIs</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">VS Code</span>
+              <span class="skill-tag px-3 py-1 text-xs font-mono rounded-full cursor-default text-cream" style="border:1px solid #1E1E2E;">DSA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="max-w-6xl mx-auto px-6 py-24">
+      <div class="grad-line mb-16"></div>
+      <div class="reveal">
+        <p class="section-label mb-4">Projects</p>
+        <h2 class="font-display font-bold text-cream text-3xl sm:text-4xl mb-12">
+          Things I've built<span class="text-ironRedBright">.</span>
+        </h2>
+        <div class="grid lg:grid-cols-2 gap-8">
+
+          <!-- MeroBari -->
+          <div class="project-card rounded-xl overflow-hidden" style="background:#12121A;border:1px solid #1E1E2E;">
+            <div class="h-1" style="background:linear-gradient(90deg,#C0001A,#FFD700,rgba(255,215,0,0.1))"></div>
+            <div class="p-8">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <p class="text-xs font-mono mb-1" style="color:#FFD700;">Featured Project</p>
+                  <h3 class="text-cream font-display font-bold text-xl">MeroBari</h3>
+                  <p class="text-stoneMid text-xs font-mono mt-1">2025 – 2026</p>
+                </div>
+                <a href="https://github.com/iamsuril1" target="_blank" rel="noopener"
+                   class="text-stoneMid hover:text-gold transition-colors mt-1">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .269.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                </a>
+              </div>
+              <p class="text-stoneMid leading-relaxed text-sm mb-6">
+                A direct-to-consumer crop marketplace built on the MERN stack — connecting Nepal's farmers with buyers without middlemen. Includes performance-optimised indexing, component-level code splitting, and a refined end-to-end checkout flow.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(192,0,26,0.15);color:#FF4455;border:1px solid rgba(192,0,26,0.3);">React.js</span>
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(192,0,26,0.15);color:#FF4455;border:1px solid rgba(192,0,26,0.3);">Node.js</span>
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(192,0,26,0.15);color:#FF4455;border:1px solid rgba(192,0,26,0.3);">Express.js</span>
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(192,0,26,0.15);color:#FF4455;border:1px solid rgba(192,0,26,0.3);">MongoDB</span>
+              </div>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-xs text-stoneMid">
+                  <span class="mt-0.5 flex-shrink-0" style="color:#FFD700;">✓</span>
+                  Farmers list and sell produce without intermediaries
+                </li>
+                <li class="flex items-start gap-2 text-xs text-stoneMid">
+                  <span class="mt-0.5 flex-shrink-0" style="color:#FFD700;">✓</span>
+                  SEO-optimised via efficient DB indexing & code splitting
+                </li>
+                <li class="flex items-start gap-2 text-xs text-stoneMid">
+                  <span class="mt-0.5 flex-shrink-0" style="color:#FFD700;">✓</span>
+                  Cross-functional UX refinement improving engagement
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Task Management -->
+          <div class="project-card rounded-xl overflow-hidden" style="background:#12121A;border:1px solid #1E1E2E;">
+            <div class="h-1" style="background:linear-gradient(90deg,#00CFFF,rgba(0,207,255,0.1))"></div>
+            <div class="p-8">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <p class="text-xs font-mono mb-1 text-stoneMid">Project</p>
+                  <h3 class="text-cream font-display font-bold text-xl">Task Management System</h3>
+                  <p class="text-stoneMid text-xs font-mono mt-1">2025</p>
+                </div>
+                <a href="https://github.com/iamsuril1" target="_blank" rel="noopener"
+                   class="text-stoneMid hover:text-gold transition-colors mt-1">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .269.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                </a>
+              </div>
+              <p class="text-stoneMid leading-relaxed text-sm mb-6">
+                A scalable task manager with role-based access control, real-time status tracking, and a custom CMS — reducing manual overhead and keeping teams in sync across projects.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);">React.js</span>
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);">Node.js</span>
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);">Express.js</span>
+                <span class="px-2 py-1 text-xs font-mono rounded" style="background:rgba(0,207,255,0.1);color:#00CFFF;border:1px solid rgba(0,207,255,0.2);">MongoDB</span>
+              </div>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-xs text-stoneMid">
+                  <span class="mt-0.5 flex-shrink-0" style="color:#FFD700;">✓</span>
+                  Role-based access control & real-time status tracking
+                </li>
+                <li class="flex items-start gap-2 text-xs text-stoneMid">
+                  <span class="mt-0.5 flex-shrink-0" style="color:#FFD700;">✓</span>
+                  Custom CMS tailored to client-specific requirements
+                </li>
+                <li class="flex items-start gap-2 text-xs text-stoneMid">
+                  <span class="mt-0.5 flex-shrink-0" style="color:#FFD700;">✓</span>
+                  Git-based code quality workflows & peer reviews
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="max-w-6xl mx-auto px-6 py-24">
+      <div class="grad-line mb-16"></div>
+      <div class="reveal text-center max-w-xl mx-auto">
+        <p class="section-label mb-4">Contact</p>
+        <h2 class="font-display font-bold text-cream text-3xl sm:text-4xl mb-6">
+          Let's build something<span class="text-ironRedBright">.</span>
+        </h2>
+        <p class="text-stoneMid leading-relaxed mb-10">
+          Whether you have a project in mind, want to collaborate, or just want to say hi — my inbox is open.
+        </p>
+        <a href="mailto:surilpokharel5@gmail.com"
+           class="repulsor-btn inline-flex items-center gap-3 px-8 py-4 font-display font-semibold rounded text-sm transition-colors"
+           style="background:#C0001A;color:#FFD700;border:1px solid #FFD700;">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          surilpokharel5@gmail.com
+        </a>
+        <div class="mt-10 flex justify-center gap-6">
+          <a href="https://github.com/iamsuril1" target="_blank" rel="noopener"
+             class="text-stoneMid hover:text-gold transition-colors text-sm font-mono flex items-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .269.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <span style="color:#1E1E2E;">·</span>
+          <a href="tel:+9779749424101" class="text-stoneMid hover:text-gold transition-colors text-sm font-mono">+977-9749424101</a>
+          <span style="color:#1E1E2E;">·</span>
+          <span class="text-stoneMid text-sm font-mono">Kathmandu, Nepal</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="border-top:1px solid #1E1E2E;" class="py-8 px-6">
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono" style="color:#4A4A5E;">
+        <span>Suril Pokharel · Full Stack Developer</span>
+        <span style="color:#1E1E2E;">Kathmandu, Nepal · 2025</span>
+      </div>
+    </footer>
+
+  </div><!-- /content -->
+
+  <!-- ─── SCRIPTS ─── -->
+  <script>
+    // ── LOADER ──
+    const loaderMessages = [
+      'Initializing JARVIS...',
+      'Loading suit protocols...',
+      'Arc reactor online...',
+      'Systems nominal...',
+      'Welcome, Suril.',
+    ];
+    const loaderBar = document.getElementById('loaderBar');
+    const loaderText = document.getElementById('loaderText');
+    const loader = document.getElementById('loader');
+    const bg = document.getElementById('ironman-bg');
+    const content = document.getElementById('content');
+
+    let progress = 0;
+    let msgIdx = 0;
+
+    const interval = setInterval(() => {
+      progress += Math.random() * 18 + 6;
+      if (progress > 100) progress = 100;
+      loaderBar.style.width = progress + '%';
+
+      const newIdx = Math.min(Math.floor(progress / 22), loaderMessages.length - 1);
+      if (newIdx !== msgIdx) {
+        msgIdx = newIdx;
+        loaderText.textContent = loaderMessages[msgIdx];
+      }
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        loaderText.textContent = 'Welcome, Suril.';
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          bg.classList.add('visible');
+          content.classList.add('visible');
+        }, 700);
+      }
+    }, 160);
+
+    // ── TYPEWRITER ──
+    const phrases = [
+      'Full Stack Developer',
+      'MERN Stack Engineer',
+      'React.js Craftsman',
+      'Building MeroBari.',
+    ];
+    let pi = 0, ci = 0, deleting = false;
+    const el = document.getElementById('typed');
+
+    function type() {
+      const phrase = phrases[pi];
+      if (!deleting) {
+        el.textContent = phrase.slice(0, ++ci);
+        if (ci === phrase.length) { deleting = true; return setTimeout(type, 2000); }
+      } else {
+        el.textContent = phrase.slice(0, --ci);
+        if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+      }
+      setTimeout(type, deleting ? 45 : 80);
+    }
+    type();
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── NAV SHRINK ──
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.style.padding = window.scrollY > 50 ? '0' : '';
+    });
+
+    // ── MOBILE MENU ──
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    function closeMobile() { mobileMenu.classList.add('hidden'); }
+  </script>
+</body>
+</html>
