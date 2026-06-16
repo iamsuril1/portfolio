@@ -105,15 +105,6 @@
       transition: width 0.15s ease;
     }
 
-    /* ─── IRON MAN BG ─── */
-    #ironman-bg {
-      position: fixed; inset: 0; z-index: 0;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 1.5s ease 0.3s;
-    }
-    #ironman-bg.visible { opacity: 1; }
-
     /* ─── CONTENT ─── */
     #content {
       position: relative; z-index: 1;
@@ -280,229 +271,6 @@
       <div class="loader-bar" id="loaderBar"></div>
     </div>
   </div>
-
-  <!-- ─── IRON MAN BACKGROUND SVG ─── -->
-  <div id="ironman-bg">
-    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="helmetGlow" cx="50%" cy="45%" r="40%">
-          <stop offset="0%" stop-color="#C0001A" stop-opacity="0.15"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </radialGradient>
-        <radialGradient id="eyeGlowL" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#FFD700" stop-opacity="0.95"/>
-          <stop offset="60%" stop-color="#FFA500" stop-opacity="0.7"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </radialGradient>
-        <radialGradient id="eyeGlowR" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#FFD700" stop-opacity="0.95"/>
-          <stop offset="60%" stop-color="#FFA500" stop-opacity="0.7"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </radialGradient>
-        <filter id="helmetBlur">
-          <feGaussianBlur stdDeviation="2"/>
-        </filter>
-        <filter id="eyeBlur">
-          <feGaussianBlur stdDeviation="8"/>
-        </filter>
-        <filter id="ambientGlow">
-          <feGaussianBlur stdDeviation="20"/>
-        </filter>
-        <linearGradient id="plateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#1A0A0A"/>
-          <stop offset="50%" stop-color="#2A0D0D"/>
-          <stop offset="100%" stop-color="#0D0D1A"/>
-        </linearGradient>
-        <linearGradient id="goldEdge" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#7A5200"/>
-          <stop offset="30%" stop-color="#FFD700"/>
-          <stop offset="70%" stop-color="#FFA500"/>
-          <stop offset="100%" stop-color="#7A5200"/>
-        </linearGradient>
-        <linearGradient id="redPlate" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#8B0000"/>
-          <stop offset="50%" stop-color="#C0001A"/>
-          <stop offset="100%" stop-color="#6B0000"/>
-        </linearGradient>
-        <clipPath id="helmetClip">
-          <ellipse cx="720" cy="460" rx="280" ry="340"/>
-        </clipPath>
-      </defs>
-
-      <!-- Ambient background glow -->
-      <ellipse cx="720" cy="450" rx="500" ry="500" fill="url(#helmetGlow)" opacity="0.6"/>
-
-      <!-- ── IRON MAN HELMET ── -->
-      <!-- Main helmet shape - back layer (dark base) -->
-      <ellipse cx="720" cy="460" rx="240" ry="300" fill="#0D0808" opacity="0.95"/>
-
-      <!-- Helmet crown -->
-      <path d="M520 340 C520 200 600 140 720 130 C840 140 920 200 920 340 L900 360 C860 280 800 240 720 235 C640 240 580 280 540 360 Z"
-            fill="url(#redPlate)" opacity="0.92"/>
-
-      <!-- Crown highlight ridge -->
-      <path d="M680 135 C690 132 710 130 720 130 C730 130 750 132 760 135"
-            stroke="url(#goldEdge)" stroke-width="3" fill="none" opacity="0.8"/>
-
-      <!-- Forehead plate -->
-      <path d="M600 240 L720 220 L840 240 L840 310 L720 295 L600 310 Z"
-            fill="#A0001A" opacity="0.85"/>
-      <path d="M600 240 L720 220 L840 240" stroke="#FFD700" stroke-width="1.5" fill="none" opacity="0.7"/>
-
-      <!-- Forehead center ridge -->
-      <path d="M720 220 L720 295" stroke="#FFD700" stroke-width="2" opacity="0.6"/>
-
-      <!-- Cheek plates — LEFT -->
-      <path d="M520 340 C510 380 505 430 515 490 L570 510 L580 340 Z"
-            fill="url(#redPlate)" opacity="0.9"/>
-      <path d="M520 340 C510 380 505 430 515 490" stroke="#FFD700" stroke-width="2" fill="none" opacity="0.5"/>
-
-      <!-- Cheek plates — RIGHT -->
-      <path d="M920 340 C930 380 935 430 925 490 L870 510 L860 340 Z"
-            fill="url(#redPlate)" opacity="0.9"/>
-      <path d="M920 340 C930 380 935 430 925 490" stroke="#FFD700" stroke-width="2" fill="none" opacity="0.5"/>
-
-      <!-- Jaw / lower face plate -->
-      <path d="M570 510 C600 600 650 650 720 660 C790 650 840 600 870 510 L860 490 C830 580 790 620 720 630 C650 620 610 580 580 490 Z"
-            fill="url(#redPlate)" opacity="0.88"/>
-
-      <!-- Jaw gold trim -->
-      <path d="M580 490 C610 580 660 625 720 635 C780 625 830 580 860 490"
-            stroke="url(#goldEdge)" stroke-width="2" fill="none" opacity="0.65"/>
-
-      <!-- Nose bridge / face plate center -->
-      <path d="M680 310 L720 305 L760 310 L760 470 L720 480 L680 470 Z"
-            fill="#8B0000" opacity="0.8"/>
-
-      <!-- Nose piece -->
-      <path d="M705 430 L720 445 L735 430 L730 460 L720 470 L710 460 Z"
-            fill="#600010" opacity="0.9"/>
-      <path d="M705 430 L720 445 L735 430" stroke="#FFD700" stroke-width="1" fill="none" opacity="0.5"/>
-
-      <!-- Mouth grill -->
-      <rect x="680" y="475" width="80" height="8" rx="4" fill="#2A0808" opacity="0.9"/>
-      <rect x="685" y="490" width="70" height="6" rx="3" fill="#2A0808" opacity="0.9"/>
-      <rect x="690" y="503" width="60" height="6" rx="3" fill="#2A0808" opacity="0.9"/>
-      <!-- Grill lines -->
-      <line x1="700" y1="475" x2="700" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
-      <line x1="715" y1="475" x2="715" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
-      <line x1="730" y1="475" x2="730" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
-      <line x1="745" y1="475" x2="745" y2="509" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
-
-      <!-- ── EYE SOCKETS ── -->
-      <!-- Left eye socket -->
-      <path d="M582 330 C590 315 620 308 650 312 C675 315 690 328 688 345 C686 362 668 372 643 370 C615 368 578 358 582 330 Z"
-            fill="#080305" opacity="0.95"/>
-
-      <!-- Right eye socket -->
-      <path d="M858 330 C850 315 820 308 790 312 C765 315 750 328 752 345 C754 362 772 372 797 370 C825 368 862 358 858 330 Z"
-            fill="#080305" opacity="0.95"/>
-
-      <!-- Left eye GLOW halo (blur layer) -->
-      <ellipse cx="635" cy="340" rx="52" ry="28" fill="url(#eyeGlowL)" filter="url(#eyeBlur)" opacity="0.9">
-        <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
-      </ellipse>
-
-      <!-- Right eye GLOW halo (blur layer) -->
-      <ellipse cx="805" cy="340" rx="52" ry="28" fill="url(#eyeGlowR)" filter="url(#eyeBlur)" opacity="0.9">
-        <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
-      </ellipse>
-
-      <!-- Left eye lens -->
-      <path d="M584 333 C592 318 622 312 650 316 C674 319 688 331 686 346 C684 361 664 370 638 367 C610 364 580 354 584 333 Z"
-            fill="#FFD700" opacity="0.0">
-        <animate attributeName="opacity" values="0.75;1;0.75" dur="2.5s" repeatCount="indefinite"/>
-        <animate attributeName="fill" values="#FFD700;#FFF5A0;#FFD700" dur="2.5s" repeatCount="indefinite"/>
-      </path>
-
-      <!-- Right eye lens -->
-      <path d="M856 333 C848 318 818 312 790 316 C766 319 752 331 754 346 C756 361 776 370 802 367 C830 364 860 354 856 333 Z"
-            fill="#FFD700" opacity="0.0">
-        <animate attributeName="opacity" values="0.75;1;0.75" dur="2.5s" repeatCount="indefinite"/>
-        <animate attributeName="fill" values="#FFD700;#FFF5A0;#FFD700" dur="2.5s" repeatCount="indefinite"/>
-      </path>
-
-      <!-- Eye scan line effect (thin bright line sweeping) -->
-      <rect x="584" y="338" width="104" height="2" rx="1" fill="#FFFFFF" opacity="0">
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite"/>
-        <animate attributeName="y" values="330;350;330" dur="2.5s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="754" y="338" width="104" height="2" rx="1" fill="#FFFFFF" opacity="0">
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite"/>
-        <animate attributeName="y" values="330;350;330" dur="2.5s" repeatCount="indefinite"/>
-      </rect>
-
-      <!-- Gold trim around eye sockets -->
-      <path d="M582 330 C590 315 620 308 650 312 C675 315 690 328 688 345"
-            stroke="#FFD700" stroke-width="2" fill="none" opacity="0.7"/>
-      <path d="M858 330 C850 315 820 308 790 312 C765 315 750 328 752 345"
-            stroke="#FFD700" stroke-width="2" fill="none" opacity="0.7"/>
-
-      <!-- Temple detail lines -->
-      <path d="M540 360 L580 340" stroke="#FFD700" stroke-width="1.5" opacity="0.4"/>
-      <path d="M900 360 L860 340" stroke="#FFD700" stroke-width="1.5" opacity="0.4"/>
-
-      <!-- Side vent slits — LEFT -->
-      <rect x="520" y="400" width="30" height="4" rx="2" fill="#FFD700" opacity="0.4"/>
-      <rect x="518" y="412" width="28" height="4" rx="2" fill="#FFD700" opacity="0.3"/>
-      <rect x="520" y="424" width="25" height="4" rx="2" fill="#FFD700" opacity="0.25"/>
-
-      <!-- Side vent slits — RIGHT -->
-      <rect x="890" y="400" width="30" height="4" rx="2" fill="#FFD700" opacity="0.4"/>
-      <rect x="894" y="412" width="28" height="4" rx="2" fill="#FFD700" opacity="0.3"/>
-      <rect x="895" y="424" width="25" height="4" rx="2" fill="#FFD700" opacity="0.25"/>
-
-      <!-- ── NECK / COLLAR ── -->
-      <path d="M610 630 L720 650 L830 630 L840 700 L720 720 L600 700 Z"
-            fill="#6B0000" opacity="0.85"/>
-      <path d="M610 630 L720 650 L830 630" stroke="url(#goldEdge)" stroke-width="2" fill="none" opacity="0.6"/>
-
-      <!-- Collar gold bolts -->
-      <circle cx="640" cy="660" r="4" fill="#FFD700" opacity="0.7"/>
-      <circle cx="720" cy="665" r="4" fill="#FFD700" opacity="0.7"/>
-      <circle cx="800" cy="660" r="4" fill="#FFD700" opacity="0.7"/>
-
-      <!-- ── OVERALL HELMET OUTLINE ── -->
-      <path d="M520 340 C510 280 540 180 600 150 C640 128 680 120 720 118 C760 120 800 128 840 150 C900 180 930 280 920 340 C935 400 940 460 925 510 C910 560 880 610 840 640 L800 665 C770 680 750 690 720 695 C690 690 670 680 640 665 L600 640 C560 610 530 560 515 510 C500 460 505 400 520 340 Z"
-            fill="none" stroke="#C0001A" stroke-width="2" opacity="0.5"/>
-
-      <!-- Outer glow edge -->
-      <path d="M520 340 C510 280 540 180 600 150 C640 128 680 120 720 118 C760 120 800 128 840 150 C900 180 930 280 920 340 C935 400 940 460 925 510 C910 560 880 610 840 640 L800 665 C770 680 750 690 720 695 C690 690 670 680 640 665 L600 640 C560 610 530 560 515 510 C500 460 505 400 520 340 Z"
-            fill="none" stroke="#FFD700" stroke-width="1" opacity="0.3" filter="url(#helmetBlur)"/>
-
-      <!-- ── HUD SCAN LINES ── scattered across background ── -->
-      <line x1="0" y1="200" x2="400" y2="200" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
-      <line x1="0" y1="400" x2="400" y2="400" stroke="#00CFFF" stroke-width="0.5" opacity="0.06"/>
-      <line x1="0" y1="600" x2="400" y2="600" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
-      <line x1="1040" y1="200" x2="1440" y2="200" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
-      <line x1="1040" y1="400" x2="1440" y2="400" stroke="#00CFFF" stroke-width="0.5" opacity="0.06"/>
-      <line x1="1040" y1="600" x2="1440" y2="600" stroke="#00CFFF" stroke-width="0.5" opacity="0.08"/>
-
-      <!-- HUD corner brackets — top left -->
-      <path d="M60 60 L60 120 M60 60 L120 60" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
-      <!-- top right -->
-      <path d="M1380 60 L1380 120 M1380 60 L1320 60" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
-      <!-- bottom left -->
-      <path d="M60 840 L60 780 M60 840 L120 840" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
-      <!-- bottom right -->
-      <path d="M1380 840 L1380 780 M1380 840 L1320 840" stroke="#00CFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
-
-      <!-- HUD readout text -->
-      <text x="80" y="90" font-family="JetBrains Mono,monospace" font-size="10" fill="#00CFFF" opacity="0.3">MARK L — ONLINE</text>
-      <text x="80" y="108" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFD700" opacity="0.25">POWER: 100%</text>
-
-      <text x="1100" y="90" font-family="JetBrains Mono,monospace" font-size="10" fill="#00CFFF" opacity="0.3">JARVIS v7.0</text>
-      <text x="1100" y="108" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFD700" opacity="0.25">SUIT INTEGRITY: 100%</text>
-
-      <!-- Subtle vignette overlay -->
-      <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
-        <stop offset="0%" stop-color="transparent"/>
-        <stop offset="100%" stop-color="#0A0A0F" stop-opacity="0.85"/>
-      </radialGradient>
-      <rect width="1440" height="900" fill="url(#vignette)"/>
-    </svg>
-  </div>
-
   <!-- ─── MAIN CONTENT ─── -->
   <div id="content">
 
@@ -864,7 +632,6 @@
     const loaderBar = document.getElementById('loaderBar');
     const loaderText = document.getElementById('loaderText');
     const loader = document.getElementById('loader');
-    const bg = document.getElementById('ironman-bg');
     const content = document.getElementById('content');
 
     let progress = 0;
@@ -886,7 +653,6 @@
         loaderText.textContent = 'Welcome, Suril.';
         setTimeout(() => {
           loader.classList.add('hidden');
-          bg.classList.add('visible');
           content.classList.add('visible');
         }, 700);
       }
