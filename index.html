@@ -208,6 +208,7 @@
           <a href="#about" class="nav-link" data-nav="about">PROFILE</a>
           <a href="#skills" class="nav-link" data-nav="skills">SKILLS</a>
           <a href="#education" class="nav-link" data-nav="education">EDU</a>
+          <a href="#experience" class="nav-link" data-nav="experience">EXPERIENCE</a>
           <a href="#work" class="nav-link" data-nav="work">WORK</a>
           <a href="#notes" class="nav-link" data-nav="notes">NOTES</a>
           <a href="#contact" class="nav-link" data-nav="contact">CONTACT</a>
@@ -223,9 +224,10 @@
         <a href="#about" class="rail-num" data-rail="about">01</a>
         <a href="#skills" class="rail-num" data-rail="skills">02</a>
         <a href="#education" class="rail-num" data-rail="education">03</a>
-        <a href="#work" class="rail-num" data-rail="work">04</a>
-        <a href="#notes" class="rail-num" data-rail="notes">05</a>
-        <a href="#contact" class="rail-num" data-rail="contact">06</a>
+        <a href="#experience" class="rail-num" data-rail="experience">04</a>
+        <a href="#work" class="rail-num" data-rail="work">05</a>
+        <a href="#notes" class="rail-num" data-rail="notes">06</a>
+        <a href="#contact" class="rail-num" data-rail="contact">07</a>
       </div>
     </div>
 
@@ -340,11 +342,23 @@
         </div>
       </section>
 
+      <!-- ---------- EXPERIENCE ---------- -->
+      <section id="experience" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
+        <span class="section-num">04</span>
+        <div class="relative z-10 max-w-3xl">
+          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">04 / EXPERIENCE</p>
+          <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3 mb-6">Experience</h2>
+          <p class="reveal reveal-left head font-semibold text-xl">Web Developer Intern</p>
+          <p class="reveal reveal-left mt-1" style="color:var(--steel)">Silk Innovation</p>
+          <p class="reveal reveal-left mono text-xs mt-2" style="color:var(--steel)">DEC 2025 — MAY 2026</p>
+        </div>
+      </section>
+
       <!-- ---------- WORK ---------- -->
       <section id="work" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">04</span>
+        <span class="section-num">05</span>
         <div class="relative z-10">
-          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">04 / SELECTED WORK</p>
+          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">05 / SELECTED WORK</p>
           <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3 mb-8">Work</h2>
 
           <div id="workList">
@@ -389,9 +403,9 @@
 
       <!-- ---------- NOTES / LEADERSHIP ---------- -->
       <section id="notes" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">05</span>
+        <span class="section-num">06</span>
         <div class="relative z-10 max-w-3xl">
-          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">05 / LEADERSHIP</p>
+          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">06 / LEADERSHIP</p>
           <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3 mb-8">Leadership & Communication</h2>
           <div class="space-y-6">
             <div class="reveal reveal-up flex gap-4">
@@ -413,7 +427,7 @@
       <!-- ---------- CONTACT ---------- -->
       <section id="contact" class="relative px-5 sm:px-10 py-24 border-t" style="border-color:var(--line); background:var(--ink);">
         <div class="relative z-10">
-          <p class="reveal reveal-up mono text-xs tracking-[.3em]" style="color:var(--red)">06 / CONTACT</p>
+          <p class="reveal reveal-up mono text-xs tracking-[.3em]" style="color:var(--red)">07 / CONTACT</p>
           <h2 class="reveal reveal-up display leading-[.9] mt-5" style="font-size:clamp(40px,9vw,110px); color:var(--paper)">
             LET'S<br>TALK.
           </h2>
@@ -458,7 +472,7 @@
     setTimeout(() => { if(document.getElementById('loader')) finish(); }, 4200);
   })();
 
-  function initAll(){
+  function initAll(){  
     initReveal();
     initScrollbar();
     initSpy();
