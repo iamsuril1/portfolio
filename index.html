@@ -6,7 +6,7 @@
 <title>Suril Pokharel — Full Stack Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.4.1/tailwind.min.js"></script>
 <script>
   if (typeof tailwind === 'undefined') {
@@ -15,541 +15,338 @@
 </script>
 <style>
   :root{
-    --paper: #f5f4ef;
-    --paper-2: #ebe9e2;
-    --ink: #14140f;
-    --red: #d6291e;
-    --blue: #1e42d8;
-    --steel: #6b6a63;
-    --line: #d3d1c7;
+    --bg: #ffffff;
+    --soft: #f4f6fb;
+    --ink: #1f2430;
+    --muted: #6b7280;
+    --accent: #4f5fe0;   /* indigo */
+    --accent-soft: #eef0fd;
+    --coral: #ef8354;
+    --line: #e7e9f0;
   }
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
   body{
-    background: var(--paper);
+    background: var(--bg);
     color: var(--ink);
     font-family: 'Inter', system-ui, sans-serif;
-    overflow-x: hidden;
   }
-  .display{ font-family: 'Archivo Black', sans-serif; }
-  .head{ font-family: 'Space Grotesk', sans-serif; }
-  .mono{ font-family: 'Space Mono', ui-monospace, monospace; }
-  ::selection{ background: var(--ink); color: var(--paper); }
-  ::-webkit-scrollbar{ width: 10px; }
-  ::-webkit-scrollbar-track{ background: var(--paper); }
-  ::-webkit-scrollbar-thumb{ background: var(--ink); }
+  h1, h2, h3, .heading{ font-family: 'Sora', sans-serif; }
+  ::selection{ background: var(--accent); color: #fff; }
 
-  /* faint paper grain */
-  .grain{
-    position: fixed; inset: 0; z-index: 60; pointer-events: none;
-    opacity: .05; mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  /* ---------- Loader ---------- */
-  #loader{
-    position: fixed; inset: 0; z-index: 100;
-    background: var(--paper);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    transition: opacity .55s ease, visibility .55s ease;
-  }
-  #loader.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
-  .load-num{
-    font-family:'Archivo Black', sans-serif;
-    font-size: clamp(64px, 18vw, 160px);
-    line-height: .9; color: var(--ink); letter-spacing: -0.02em;
-  }
-  .load-num .pct{ color: var(--red); }
-  .load-rule{ width: min(60vw, 360px); height: 6px; background: var(--paper-2); margin-top: 18px; position: relative; overflow:hidden; }
-  .load-rule i{ position:absolute; left:0; top:0; bottom:0; width:0%; background: var(--ink); }
-  .load-tag{ font-family:'Space Mono', monospace; font-size: 11px; letter-spacing:.25em; color: var(--steel); margin-top:16px; text-transform: uppercase; }
-
-  /* ---------- Progress bar ---------- */
-  #scrollbar{ position:fixed; top:0; left:0; height:3px; background: var(--red); z-index:70; width:0%; }
-
-  /* ---------- Marquee ---------- */
-  .marquee-track{
-    display:flex; width: max-content;
-    animation: marquee 22s linear infinite;
-  }
-  @keyframes marquee{ from{ transform: translateX(0);} to{ transform: translateX(-50%);} }
-  .marquee-item{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size: 14px; padding: 10px 28px; white-space: nowrap; }
-  .marquee-item::after{ content:"—"; margin-left: 28px; color: rgba(255,255,255,.5); }
-
-  /* ---------- Side rail ---------- */
-  #rail{
-    position: fixed; left: 0; top: 0; bottom: 0; width: 56px; z-index: 40;
-    display:none; align-items:center; justify-content:center;
-    border-right: 1px solid var(--line);
-    background: var(--paper);
-  }
-  @media (min-width: 900px){ #rail{ display:flex; } }
-  .rail-num{
-    font-family:'Space Mono', monospace; font-size: 11px; color: var(--steel);
-    display:block; padding: 10px 0; text-align:center; letter-spacing:.05em;
-    transition: color .25s ease, transform .25s ease;
-  }
-  .rail-num.active{ color: var(--red); transform: scale(1.35); font-weight:700; }
-
-  /* ---------- Top nav ---------- */
   header{
-    position: fixed; top:0; left:0; right:0; z-index: 50;
-    background: var(--ink); color: var(--paper);
+    position: sticky; top:0; z-index: 50;
+    background: rgba(255,255,255,.9); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
   }
   .nav-link{
-    font-family:'Space Mono', monospace; font-size: 11px; letter-spacing:.08em;
-    color: rgba(245,244,239,.55); transition: color .2s ease;
+    font-size: 14px; font-weight: 600; color: var(--muted);
+    padding: 8px 12px; border-radius: 999px; transition: color .2s ease, background .2s ease;
   }
-  .nav-link.active, .nav-link:hover{ color: var(--paper); }
+  .nav-link:hover, .nav-link.active{ color: var(--accent); background: var(--accent-soft); }
 
-  main{ margin-left: 0; }
-  @media (min-width: 900px){ main{ margin-left: 56px; } }
-
-  .rule{ height:1px; background: var(--line); }
-  .section-num{
-    font-family:'Archivo Black', sans-serif; color: var(--paper-2);
-    font-size: clamp(64px, 12vw, 140px); line-height: .8;
-    -webkit-text-stroke: 1.5px var(--line);
-    position: absolute; top: -0.15em; right: 0; z-index: 0; user-select:none;
+  .eyebrow{
+    display:inline-block; font-size: 13px; font-weight:700; letter-spacing:.04em;
+    color: var(--accent); background: var(--accent-soft);
+    padding: 5px 12px; border-radius: 999px;
   }
 
-  .tag{
-    font-family:'Space Mono', monospace; font-size: 12px;
-    border: 1.5px solid var(--ink); padding: 6px 12px;
-    transition: background .2s ease, color .2s ease;
+  .card{
+    background: #fff; border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 1px 2px rgba(20,20,40,.03);
   }
-  .tag.blue{ border-color: var(--blue); color: var(--blue); }
-  .tag.red{ border-color: var(--red); color: var(--red); }
-  .tag:hover{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .chip{
+    font-size: 14px; font-weight:600; color: var(--ink);
+    background: var(--soft); border: 1px solid var(--line);
+    padding: 8px 14px; border-radius: 999px;
+  }
+  .chip.accent{ background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .chip.coral{ background: #fdefe7; color: #b9541c; border-color: transparent; }
 
   .btn{
-    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14px;
-    border: 2px solid var(--ink); padding: 12px 22px; display:inline-flex; align-items:center; gap:8px;
-    position: relative; overflow:hidden; z-index:1;
+    font-weight: 700; font-size: 15px; border-radius: 999px;
+    padding: 14px 26px; display: inline-flex; align-items:center; gap:8px;
+    transition: transform .15s ease, box-shadow .15s ease;
   }
-  .btn::before{
-    content:""; position:absolute; inset:0; background: var(--ink); transform: translateY(101%);
-    transition: transform .28s cubic-bezier(.7,0,.3,1); z-index:-1;
+  .btn.solid{ background: var(--accent); color: #fff; box-shadow: 0 10px 24px rgba(79,95,224,.28); }
+  .btn.solid:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(79,95,224,.36); }
+  .btn.outline{ border: 1.5px solid var(--line); color: var(--ink); }
+  .btn.outline:hover{ border-color: var(--accent); color: var(--accent); }
+
+  .step-num{
+    width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); color: var(--accent);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-family:'Sora',sans-serif; font-size: 15px;
+    flex-shrink: 0;
   }
-  .btn:hover::before{ transform: translateY(0); }
-  .btn:hover{ color: var(--paper); }
-  .btn.solid{ background: var(--ink); color: var(--paper); }
-  .btn.solid::before{ background: var(--red); }
 
-  .work-item{ border-top: 1px solid var(--line); }
-  .work-item:last-child{ border-bottom: 1px solid var(--line); }
-  .work-row{ transition: background .3s ease, padding-left .3s ease; }
-  .work-row:hover{ background: var(--ink); }
-  .work-row:hover .w-title, .work-row:hover .w-meta, .work-row:hover .w-arrow{ color: var(--paper) !important; }
-  .work-detail{ max-height: 0; overflow: hidden; transition: max-height .45s ease; }
-  .work-item.open .work-detail{ max-height: 480px; }
-  .work-arrow{ transition: transform .35s ease; }
-  .work-item.open .work-arrow{ transform: rotate(135deg); }
+  .work-item summary{ cursor: pointer; list-style: none; }
+  .work-item summary::-webkit-details-marker{ display:none; }
+  .work-item .chev{ transition: transform .25s ease; }
+  .work-item[open] .chev{ transform: rotate(90deg); }
 
-  .stat-num{ font-family:'Archivo Black', sans-serif; font-size: clamp(70px,14vw,140px); line-height:.85; }
-
-  /* ---------- Reveal (two-way) ---------- */
-  .reveal{ opacity: 0; transition: opacity .7s ease, transform .7s ease; will-change: transform, opacity; }
-  .reveal-up{ transform: translateY(46px); }
-  .reveal-left{ transform: translateX(-46px); }
-  .reveal-right{ transform: translateX(46px); }
-  .reveal-scale{ transform: scale(.9); }
-  .reveal.in{ opacity: 1; transform: translate(0,0) scale(1); }
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; transition:none !important; }
     .reveal{ opacity:1 !important; transform:none !important; }
   }
 
-  a:focus-visible, button:focus-visible{ outline: 2px solid var(--red); outline-offset:3px; }
-
-  .cursor-dot{
-    position: fixed; width:16px; height:16px; border-radius:50%;
-    border: 1.5px solid var(--ink); pointer-events:none; z-index:80;
-    transform: translate(-50%,-50%); transition: width .2s ease, height .2s ease, background .2s ease;
-    display: none;
-  }
-  @media (min-width: 900px){ .cursor-dot{ display:block; } }
-  .cursor-dot.big{ width: 52px; height:52px; background: var(--red); border-color: var(--red); }
+  a:focus-visible, button:focus-visible, summary:focus-visible{ outline: 2px solid var(--accent); outline-offset:3px; border-radius: 6px; }
 </style>
 </head>
 <body class="antialiased">
 
-  <div class="grain"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div id="scrollbar"></div>
+  <header>
+    <nav class="max-w-5xl mx-auto flex items-center justify-between px-5 sm:px-8" style="height:64px;">
+      <span class="heading font-bold text-base">Suril Pokharel</span>
+      <div class="hidden md:flex gap-1">
+        <a href="#home" class="nav-link" data-nav="home">Home</a>
+        <a href="#about" class="nav-link" data-nav="about">About</a>
+        <a href="#skills" class="nav-link" data-nav="skills">Skills</a>
+        <a href="#education" class="nav-link" data-nav="education">Education</a>
+        <a href="#experience" class="nav-link" data-nav="experience">Experience</a>
+        <a href="#work" class="nav-link" data-nav="work">Projects</a>
+        <a href="#notes" class="nav-link" data-nav="notes">Strengths</a>
+        <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+      </div>
+      <a href="#contact" class="btn solid md:hidden" style="padding:10px 18px; font-size:13px;">Contact</a>
+    </nav>
+  </header>
 
-  <!-- ===================== LOADER ===================== -->
-  <div id="loader" aria-hidden="true">
-    <div class="load-num mono"><span id="loadNum">00</span><span class="pct">%</span></div>
-    <div class="load-rule"><i id="loadFill"></i></div>
-    <p class="load-tag">Compiling index</p>
-  </div>
+  <main class="max-w-5xl mx-auto">
 
-  <!-- ===================== SITE ===================== -->
-  <div id="site" style="opacity:0">
-
-    <header>
-      <div class="bg-red-600" style="background:var(--red)">
-        <div class="marquee-track">
-          <div class="marquee-item">MERN STACK</div><div class="marquee-item">REACT.JS</div>
-          <div class="marquee-item">NODE.JS</div><div class="marquee-item">EXPRESS.JS</div>
-          <div class="marquee-item">MONGODB</div><div class="marquee-item">PYTHON</div>
-          <div class="marquee-item">TAILWIND CSS</div><div class="marquee-item">KATHMANDU, NEPAL</div>
-          <div class="marquee-item">MERN STACK</div><div class="marquee-item">REACT.JS</div>
-          <div class="marquee-item">NODE.JS</div><div class="marquee-item">EXPRESS.JS</div>
-          <div class="marquee-item">MONGODB</div><div class="marquee-item">PYTHON</div>
-          <div class="marquee-item">TAILWIND CSS</div><div class="marquee-item">KATHMANDU, NEPAL</div>
+    <!-- ---------- HOME ---------- -->
+    <section id="home" class="px-5 sm:px-8 pt-16 sm:pt-24 pb-16">
+      <p class="reveal eyebrow">Full Stack Web Developer</p>
+      <h1 class="reveal heading font-extrabold leading-tight mt-5" style="font-size:clamp(36px,7vw,64px);">
+        Hi, I'm Suril —<br>I build websites and apps<br>that work well and look good.
+      </h1>
+      <p class="reveal leading-relaxed mt-6 max-w-xl text-lg" style="color:var(--muted)">
+        I create web applications using modern tools like React, Node.js, and MongoDB —
+        with additional experience in Python. I'm currently finishing my Computer Science
+        degree at Herald College Kathmandu.
+      </p>
+      <div class="reveal flex flex-wrap gap-3 mt-8">
+        <a href="#work" class="btn solid">See my projects</a>
+        <a href="#contact" class="btn outline">Get in touch</a>
+      </div>
+      <div class="reveal grid grid-cols-2 sm:grid-cols-4 gap-4 mt-14 pt-8 border-t" style="border-color:var(--line);">
+        <div>
+          <p class="text-sm" style="color:var(--muted)">Location</p>
+          <p class="font-semibold mt-1">Kathmandu, Nepal</p>
+        </div>
+        <div>
+          <p class="text-sm" style="color:var(--muted)">Phone</p>
+          <p class="font-semibold mt-1">+977 9749424101</p>
+        </div>
+        <div>
+          <p class="text-sm" style="color:var(--muted)">Email</p>
+          <p class="font-semibold mt-1 break-all">surilpokharel4@gmail.com</p>
+        </div>
+        <div>
+          <p class="text-sm" style="color:var(--muted)">GitHub</p>
+          <a href="https://github.com/iamsuril1" target="_blank" rel="noopener" class="font-semibold mt-1 inline-block underline" style="color:var(--accent)">iamsuril1 ↗</a>
         </div>
       </div>
-      <nav class="flex items-center justify-between px-5 sm:px-8" style="height:48px;">
-        <span class="head font-bold text-sm" style="color:var(--paper)">S. POKHAREL</span>
-        <div class="hidden sm:flex gap-6">
-          <a href="#about" class="nav-link" data-nav="about">PROFILE</a>
-          <a href="#skills" class="nav-link" data-nav="skills">SKILLS</a>
-          <a href="#education" class="nav-link" data-nav="education">EDU</a>
-          <a href="#experience" class="nav-link" data-nav="experience">EXPERIENCE</a>
-          <a href="#work" class="nav-link" data-nav="work">WORK</a>
-          <a href="#notes" class="nav-link" data-nav="notes">NOTES</a>
-          <a href="#contact" class="nav-link" data-nav="contact">CONTACT</a>
-        </div>
-        <a href="#contact" class="nav-link sm:hidden">CONTACT</a>
-      </nav>
-    </header>
+    </section>
 
-    <!-- side rail -->
-    <div id="rail">
-      <div>
-        <a href="#home" class="rail-num" data-rail="home">00</a>
-        <a href="#about" class="rail-num" data-rail="about">01</a>
-        <a href="#skills" class="rail-num" data-rail="skills">02</a>
-        <a href="#education" class="rail-num" data-rail="education">03</a>
-        <a href="#experience" class="rail-num" data-rail="experience">04</a>
-        <a href="#work" class="rail-num" data-rail="work">05</a>
-        <a href="#notes" class="rail-num" data-rail="notes">06</a>
-        <a href="#contact" class="rail-num" data-rail="contact">07</a>
+    <!-- ---------- ABOUT ---------- -->
+    <section id="about" class="px-5 sm:px-8 py-16 border-t" style="border-color:var(--line)">
+      <p class="reveal eyebrow">About me</p>
+      <h2 class="reveal heading font-bold text-3xl mt-4 mb-6">A quick summary</h2>
+      <p class="reveal leading-relaxed text-lg max-w-2xl" style="color:var(--muted)">
+        I'm a results-driven web developer with hands-on experience building complete web
+        applications — from the parts you see on screen to the parts running behind the
+        scenes. I mainly work with <b style="color:var(--ink)">React</b>,
+        <b style="color:var(--ink)">Node.js</b>, <b style="color:var(--ink)">Express</b>,
+        and <b style="color:var(--ink)">MongoDB</b>, and I also have experience with Python
+        and Django. I enjoy working with teams to build products that are easy and pleasant
+        for people to use.
+      </p>
+    </section>
+
+    <!-- ---------- SKILLS ---------- -->
+    <section id="skills" class="px-5 sm:px-8 py-16 border-t" style="border-color:var(--line)">
+      <p class="reveal eyebrow">What I know</p>
+      <h2 class="reveal heading font-bold text-3xl mt-4 mb-8">Skills</h2>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="reveal card p-6">
+          <p class="font-semibold mb-3">Programming languages</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">JavaScript</span><span class="chip">Python</span>
+            <span class="chip">HTML</span><span class="chip">CSS</span>
+          </div>
+        </div>
+        <div class="reveal card p-6">
+          <p class="font-semibold mb-3">Tools I build with</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip accent">React</span><span class="chip accent">Node.js</span>
+            <span class="chip accent">Express</span><span class="chip accent">Tailwind CSS</span>
+          </div>
+        </div>
+        <div class="reveal card p-6">
+          <p class="font-semibold mb-3">Where I store data</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip coral">MongoDB</span><span class="chip coral">MySQL</span>
+          </div>
+        </div>
+        <div class="reveal card p-6">
+          <p class="font-semibold mb-3">Everyday tools</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="chip">Git</span><span class="chip">GitHub</span>
+            <span class="chip">REST APIs</span><span class="chip">VS Code</span>
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="reveal card p-6 mt-6">
+        <p class="font-semibold mb-3">Problem solving</p>
+        <span class="chip">Data Structures & Algorithms</span>
+      </div>
+    </section>
 
-    <main>
-
-      <!-- ---------- HOME ---------- -->
-      <section id="home" class="relative px-5 sm:px-10 pt-32 pb-20 overflow-hidden">
-        <span class="section-num">HI</span>
-        <p class="reveal reveal-up mono text-xs tracking-[.3em]" style="color:var(--red)">FULL STACK DEVELOPER — MERN</p>
-        <h1 class="reveal reveal-up display leading-[.92] mt-5" style="font-size:clamp(48px,10vw,128px); color:var(--ink)">
-          SURIL<br>POKHAREL
-        </h1>
-        <div class="reveal reveal-up flex flex-wrap items-end justify-between gap-6 mt-10 max-w-3xl">
-          <p class="leading-relaxed max-w-md" style="color:var(--steel)">
-            Results-driven Full Stack Web Developer building scalable MERN applications —
-            React.js, Node.js, Express.js, and MongoDB — with additional expertise in Python
-            and Django. Currently completing a B.S. in Computer Science at Herald College Kathmandu.
-          </p>
-          <div class="flex gap-3">
-            <a href="#work" class="btn solid">VIEW WORK →</a>
-            <a href="#contact" class="btn">CONTACT</a>
-          </div>
-        </div>
-        <div class="reveal reveal-up rule mt-14"></div>
-        <div class="reveal reveal-up grid grid-cols-2 sm:grid-cols-4 gap-6 mt-6 mono text-xs" style="color:var(--steel)">
-          <span>KATHMANDU, NP</span>
-          <span>+977&nbsp;9749424101</span>
-          <span>SURILPOKHAREL4@GMAIL.COM</span>
-          <a href="https://github.com/iamsuril1" target="_blank" rel="noopener" class="underline" style="color:var(--ink)">GITHUB ↗</a>
-        </div>
-      </section>
-
-      <!-- ---------- ABOUT ---------- -->
-      <section id="about" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">01</span>
-        <div class="relative z-10 max-w-3xl">
-          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">01 / PROFILE</p>
-          <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3">Profile</h2>
-          <p class="reveal reveal-left leading-relaxed mt-6 text-lg" style="color:var(--steel)">
-            Results-driven Full Stack Web Developer with hands-on experience building scalable
-            MERN stack applications. Proficient in <b style="color:var(--ink)">React.js</b>,
-            <b style="color:var(--ink)">Node.js</b>, <b style="color:var(--ink)">Express.js</b>,
-            and <b style="color:var(--ink)">MongoDB</b>, with additional expertise in Python,
-            Django, and Tailwind CSS. Skilled at collaborating with cross-functional teams to
-            deliver performant, user-friendly web solutions.
+    <!-- ---------- EDUCATION ---------- -->
+    <section id="education" class="px-5 sm:px-8 py-16 border-t" style="border-color:var(--line)">
+      <p class="reveal eyebrow">School</p>
+      <h2 class="reveal heading font-bold text-3xl mt-4 mb-8">Education</h2>
+      <div class="reveal card p-7 flex flex-col sm:flex-row gap-8 items-start sm:items-center justify-between">
+        <div>
+          <p class="heading font-bold text-xl">Herald College Kathmandu</p>
+          <p class="mt-1" style="color:var(--muted)">Bachelor of Science, Computer Science · Naxal, Kathmandu, Nepal</p>
+          <p class="text-sm mt-2" style="color:var(--muted)">2024 — 2026</p>
+          <p class="mt-4 leading-relaxed max-w-lg" style="color:var(--muted)">
+            Main subjects: Data Structures & Algorithms, Database Management Systems,
+            Web Technologies, and Software Engineering.
           </p>
         </div>
-      </section>
-
-      <!-- ---------- SKILLS ---------- -->
-      <section id="skills" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">02</span>
-        <div class="relative z-10">
-          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">02 / SKILLS</p>
-          <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3 mb-10">Skills</h2>
-
-          <div class="grid sm:grid-cols-2 gap-10">
-            <div class="reveal reveal-left">
-              <p class="mono text-xs mb-3" style="color:var(--steel)">LANGUAGES</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="tag">JavaScript (ES6+)</span><span class="tag">Python</span>
-                <span class="tag">HTML5</span><span class="tag">CSS3</span>
-              </div>
-            </div>
-            <div class="reveal reveal-right">
-              <p class="mono text-xs mb-3" style="color:var(--steel)">FRAMEWORKS & LIBRARIES</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="tag blue">React.js</span><span class="tag blue">Node.js</span>
-                <span class="tag blue">Express.js</span><span class="tag blue">Tailwind CSS</span>
-              </div>
-            </div>
-            <div class="reveal reveal-left">
-              <p class="mono text-xs mb-3" style="color:var(--steel)">DATABASES</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="tag red">MongoDB</span><span class="tag red">MySQL</span>
-              </div>
-            </div>
-            <div class="reveal reveal-right">
-              <p class="mono text-xs mb-3" style="color:var(--steel)">TOOLS & PLATFORMS</p>
-              <div class="flex flex-wrap gap-2">
-                <span class="tag">Git</span><span class="tag">GitHub</span>
-                <span class="tag">REST APIs</span><span class="tag">VS Code</span>
-              </div>
-            </div>
-          </div>
-          <div class="reveal reveal-up mt-8">
-            <p class="mono text-xs mb-3" style="color:var(--steel)">PROBLEM-SOLVING</p>
-            <span class="tag">Data Structures & Algorithms</span>
-          </div>
+        <div class="text-center shrink-0 rounded-2xl px-8 py-6" style="background:var(--accent-soft)">
+          <p class="heading font-extrabold" style="font-size:56px; color:var(--accent); line-height:1;">70.33%</p>
+          <p class="text-sm font-semibold mt-2" style="color:var(--accent)">First Class</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ---------- EDUCATION ---------- -->
-      <section id="education" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">03</span>
-        <div class="relative z-10 flex flex-col sm:flex-row gap-10 sm:gap-16 items-start">
-          <div class="reveal reveal-left flex-1">
-            <p class="mono text-xs tracking-[.3em]" style="color:var(--red)">03 / EDUCATION</p>
-            <h2 class="head font-bold text-3xl sm:text-4xl mt-3 mb-6">Education</h2>
-            <p class="head font-semibold text-xl">Herald College Kathmandu</p>
-            <p class="mt-1" style="color:var(--steel)">B.S. Computer Science · Naxal, Kathmandu, Nepal</p>
-            <p class="mono text-xs mt-2" style="color:var(--steel)">2024 — 2026</p>
-            <p class="mt-5 leading-relaxed" style="color:var(--steel)">
-              Coursework: Data Structures & Algorithms, Database Management Systems,
-              Web Technologies, Software Engineering.
-            </p>
-          </div>
-          <div class="reveal reveal-right shrink-0">
-            <p class="stat-num" style="color:var(--ink)">70<span style="color:var(--red)">.33</span></p>
-            <p class="mono text-xs" style="color:var(--steel)">PERCENT — FIRST CLASS</p>
-          </div>
+    <!-- ---------- EXPERIENCE ---------- -->
+    <section id="experience" class="px-5 sm:px-8 py-16 border-t" style="border-color:var(--line)">
+      <p class="reveal eyebrow">Work history</p>
+      <h2 class="reveal heading font-bold text-3xl mt-4 mb-8">Experience</h2>
+      <div class="reveal card p-7 flex gap-5 items-start">
+        <div class="step-num">1</div>
+        <div>
+          <p class="heading font-bold text-xl">Web Developer Intern</p>
+          <p class="mt-1" style="color:var(--muted)">Silk Innovation</p>
+          <p class="text-sm mt-2" style="color:var(--muted)">December 2025 — May 2026</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ---------- EXPERIENCE ---------- -->
-      <section id="experience" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">04</span>
-        <div class="relative z-10 max-w-3xl">
-          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">04 / EXPERIENCE</p>
-          <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3 mb-6">Experience</h2>
-          <p class="reveal reveal-left head font-semibold text-xl">Web Developer Intern</p>
-          <p class="reveal reveal-left mt-1" style="color:var(--steel)">Silk Innovation</p>
-          <p class="reveal reveal-left mono text-xs mt-2" style="color:var(--steel)">DEC 2025 — MAY 2026</p>
+    <!-- ---------- WORK / PROJECTS ---------- -->
+    <section id="work" class="px-5 sm:px-8 py-16 border-t" style="border-color:var(--line)">
+      <p class="reveal eyebrow">Things I've built</p>
+      <h2 class="reveal heading font-bold text-3xl mt-4 mb-8">Projects</h2>
+
+      <div class="space-y-5">
+        <details class="work-item reveal card p-6" open>
+          <summary class="flex items-center justify-between gap-4">
+            <div>
+              <p class="heading font-bold text-xl">MeroBari — Farm-to-Buyer Selling System</p>
+              <p class="text-sm mt-1" style="color:var(--muted)">2025–2026</p>
+            </div>
+            <span class="chev text-2xl" style="color:var(--accent)">›</span>
+          </summary>
+          <p class="text-sm font-semibold mt-5 mb-3" style="color:var(--accent)">Built with: React · Node.js · Express · MongoDB</p>
+          <ul class="space-y-2 leading-relaxed" style="color:var(--muted)">
+            <li>• Built a website where farmers can sell their crops directly to buyers, without a middleman.</li>
+            <li>• Made the site faster and easier to find on search engines by organizing the data and code better.</li>
+            <li>• Worked with other team members to make buying and checking out simple for shoppers.</li>
+          </ul>
+        </details>
+
+        <details class="work-item reveal card p-6">
+          <summary class="flex items-center justify-between gap-4">
+            <div>
+              <p class="heading font-bold text-xl">Task Management System</p>
+              <p class="text-sm mt-1" style="color:var(--muted)">2025</p>
+            </div>
+            <span class="chev text-2xl" style="color:var(--accent)">›</span>
+          </summary>
+          <p class="text-sm font-semibold mt-5 mb-3" style="color:var(--accent)">Built with: React · Node.js · Express · MongoDB</p>
+          <ul class="space-y-2 leading-relaxed" style="color:var(--muted)">
+            <li>• Built an app for tracking tasks, where each person only sees and does what fits their role.</li>
+            <li>• Custom-built the system to fit each client's specific needs, saving time on manual work.</li>
+            <li>• Kept the code reliable by having teammates review each other's work before it went live.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ---------- NOTES / STRENGTHS ---------- -->
+    <section id="notes" class="px-5 sm:px-8 py-16 border-t" style="border-color:var(--line)">
+      <p class="reveal eyebrow">How I work with people</p>
+      <h2 class="reveal heading font-bold text-3xl mt-4 mb-8">Leadership & Communication</h2>
+      <div class="space-y-4">
+        <div class="reveal card p-6 flex gap-5 items-start">
+          <div class="step-num" style="background:#fdefe7; color:#b9541c;">1</div>
+          <p class="leading-relaxed pt-2" style="color:var(--muted)">Helped newer developers learn by reviewing their code and coding together, so the whole team followed good practices.</p>
         </div>
-      </section>
-
-      <!-- ---------- WORK ---------- -->
-      <section id="work" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">05</span>
-        <div class="relative z-10">
-          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">05 / SELECTED WORK</p>
-          <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3 mb-8">Work</h2>
-
-          <div id="workList">
-            <div class="work-item reveal reveal-up" data-work="0">
-              <button class="work-row w-full flex items-center justify-between gap-4 py-6 px-2 text-left" data-toggle="0">
-                <span class="w-title head font-semibold text-xl sm:text-2xl">MeroBari — D2C Crop Selling System</span>
-                <span class="flex items-center gap-4 shrink-0">
-                  <span class="w-meta mono text-xs hidden sm:inline" style="color:var(--steel)">2025–26</span>
-                  <span class="w-arrow text-2xl" style="color:var(--ink)">+</span>
-                </span>
-              </button>
-              <div class="work-detail px-2">
-                <p class="mono text-xs mb-4" style="color:var(--red)">React.js · Node.js · Express.js · MongoDB</p>
-                <ul class="space-y-2 pb-8 max-w-2xl leading-relaxed" style="color:var(--steel)">
-                  <li>— Architected a direct-to-consumer crop marketplace on the MERN stack, letting farmers list and sell produce without intermediaries.</li>
-                  <li>— Improved performance and SEO through database indexing and component-level code splitting.</li>
-                  <li>— Partnered with cross-functional teams to refine UX flows and streamline checkout.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="work-item reveal reveal-up" data-work="1">
-              <button class="work-row w-full flex items-center justify-between gap-4 py-6 px-2 text-left" data-toggle="1">
-                <span class="w-title head font-semibold text-xl sm:text-2xl">Task Management System</span>
-                <span class="flex items-center gap-4 shrink-0">
-                  <span class="w-meta mono text-xs hidden sm:inline" style="color:var(--steel)">2025</span>
-                  <span class="w-arrow text-2xl" style="color:var(--ink)">+</span>
-                </span>
-              </button>
-              <div class="work-detail px-2">
-                <p class="mono text-xs mb-4" style="color:var(--red)">React.js · Node.js · Express.js · MongoDB</p>
-                <ul class="space-y-2 pb-8 max-w-2xl leading-relaxed" style="color:var(--steel)">
-                  <li>— Built a scalable, secure task app with role-based access control and real-time status tracking.</li>
-                  <li>— Designed a custom CMS for client-specific requirements, cutting manual overhead and raising efficiency.</li>
-                  <li>— Enforced code quality through Git-based workflows and peer code reviews.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div class="reveal card p-6 flex gap-5 items-start">
+          <div class="step-num" style="background:#fdefe7; color:#b9541c;">2</div>
+          <p class="leading-relaxed pt-2" style="color:var(--muted)">Organized project timelines and divided up tasks so work stayed on schedule and met quality expectations.</p>
         </div>
-      </section>
-
-      <!-- ---------- NOTES / LEADERSHIP ---------- -->
-      <section id="notes" class="relative px-5 sm:px-10 py-20 border-t" style="border-color:var(--line)">
-        <span class="section-num">06</span>
-        <div class="relative z-10 max-w-3xl">
-          <p class="reveal reveal-left mono text-xs tracking-[.3em]" style="color:var(--red)">06 / LEADERSHIP</p>
-          <h2 class="reveal reveal-left head font-bold text-3xl sm:text-4xl mt-3 mb-8">Leadership & Communication</h2>
-          <div class="space-y-6">
-            <div class="reveal reveal-up flex gap-4">
-              <span class="mono text-xs mt-1" style="color:var(--red)">01</span>
-              <p class="leading-relaxed" style="color:var(--steel)">Mentored junior developers through code reviews and pair programming, promoting MERN stack best practices.</p>
-            </div>
-            <div class="reveal reveal-up flex gap-4">
-              <span class="mono text-xs mt-1" style="color:var(--red)">02</span>
-              <p class="leading-relaxed" style="color:var(--steel)">Coordinated project milestones and task allocation across development cycles for on-time, high-quality delivery.</p>
-            </div>
-            <div class="reveal reveal-up flex gap-4">
-              <span class="mono text-xs mt-1" style="color:var(--red)">03</span>
-              <p class="leading-relaxed" style="color:var(--steel)">Communicated with clients and stakeholders to gather requirements, present progress, and align on deliverables.</p>
-            </div>
-          </div>
+        <div class="reveal card p-6 flex gap-5 items-start">
+          <div class="step-num" style="background:#fdefe7; color:#b9541c;">3</div>
+          <p class="leading-relaxed pt-2" style="color:var(--muted)">Talked directly with clients to understand what they needed, share progress, and agree on next steps.</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ---------- CONTACT ---------- -->
-      <section id="contact" class="relative px-5 sm:px-10 py-24 border-t" style="border-color:var(--line); background:var(--ink);">
-        <div class="relative z-10">
-          <p class="reveal reveal-up mono text-xs tracking-[.3em]" style="color:var(--red)">07 / CONTACT</p>
-          <h2 class="reveal reveal-up display leading-[.9] mt-5" style="font-size:clamp(40px,9vw,110px); color:var(--paper)">
-            LET'S<br>TALK.
-          </h2>
-          <div class="reveal reveal-up grid sm:grid-cols-3 gap-4 mt-12 max-w-3xl">
-            <a href="mailto:surilpokharel4@gmail.com" class="btn" style="border-color:var(--paper); color:var(--paper)">✉ EMAIL</a>
-            <a href="tel:+9779749424101" class="btn" style="border-color:var(--paper); color:var(--paper)">☎ CALL</a>
-            <a href="https://github.com/iamsuril1" target="_blank" rel="noopener" class="btn" style="border-color:var(--paper); color:var(--paper)">⌥ GITHUB</a>
-          </div>
-          <p class="reveal reveal-up mono text-xs mt-16" style="color:rgba(245,244,239,.4)">© 2026 SURIL POKHAREL — KATHMANDU, NEPAL</p>
+    <!-- ---------- CONTACT ---------- -->
+    <section id="contact" class="px-5 sm:px-8 py-20 border-t" style="border-color:var(--line)">
+      <div class="reveal rounded-3xl p-10 sm:p-14 text-center" style="background:var(--accent);">
+        <p class="text-sm font-semibold" style="color:#dfe2ff">Let's work together</p>
+        <h2 class="heading font-extrabold leading-tight mt-4 text-white" style="font-size:clamp(32px,6vw,52px);">
+          Have a project in mind?<br>Let's talk.
+        </h2>
+        <div class="flex flex-wrap justify-center gap-3 mt-9">
+          <a href="mailto:surilpokharel4@gmail.com" class="btn" style="background:#fff; color:var(--accent);">✉ Email me</a>
+          <a href="tel:+9779749424101" class="btn" style="background:rgba(255,255,255,.15); color:#fff;">☎ Call me</a>
+          <a href="https://github.com/iamsuril1" target="_blank" rel="noopener" class="btn" style="background:rgba(255,255,255,.15); color:#fff;">GitHub ↗</a>
         </div>
-      </section>
+      </div>
+      <p class="text-center text-sm mt-8" style="color:var(--muted)">© 2026 Suril Pokharel — Kathmandu, Nepal</p>
+    </section>
 
-    </main>
-  </div>
+  </main>
 
 <script>
-  // ---------------- Loading sequence ----------------
-  (function boot(){
-    const numEl = document.getElementById('loadNum');
-    const fill = document.getElementById('loadFill');
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.random()*14 + 7;
-      if(progress >= 100){
-        progress = 100;
-        clearInterval(interval);
-        setTimeout(finish, 400);
-      }
-      numEl.textContent = String(Math.floor(progress)).padStart(2,'0');
-      fill.style.width = progress + '%';
-    }, 180);
-
-    function finish(){
-      const loader = document.getElementById('loader');
-      const site = document.getElementById('site');
-      loader.classList.add('hidden');
-      site.style.transition = 'opacity .6s ease';
-      site.style.opacity = '1';
-      setTimeout(() => loader.remove(), 650);
-      initAll();
-    }
-    setTimeout(() => { if(document.getElementById('loader')) finish(); }, 4200);
-  })();
-
-  function initAll(){  
-    initReveal();
-    initScrollbar();
-    initSpy();
-    initCursor();
-    initWork();
-  }
-
-  // ---------------- Two-way scroll reveal ----------------
   function initReveal(){
     const items = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if(e.isIntersecting){
-          e.target.classList.add('in');
-        } else {
-          // reverse the animation when it scrolls back out of view
-          e.target.classList.remove('in');
-        }
+        if(e.isIntersecting){ e.target.classList.add('in'); }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     items.forEach(it => io.observe(it));
   }
 
-  // ---------------- Scroll progress bar ----------------
-  function initScrollbar(){
-    const bar = document.getElementById('scrollbar');
-    function update(){
-      const h = document.documentElement;
-      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
-      bar.style.width = scrolled + '%';
-    }
-    document.addEventListener('scroll', update, { passive:true });
-    update();
-  }
-
-  // ---------------- Scroll-spy (nav + rail) ----------------
   function initSpy(){
     const sections = document.querySelectorAll('main section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
-    const railLinks = document.querySelectorAll('.rail-num');
     const spy = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if(entry.isIntersecting){
           const id = entry.target.getAttribute('id');
           navLinks.forEach(l => l.classList.toggle('active', l.dataset.nav === id));
-          railLinks.forEach(l => l.classList.toggle('active', l.dataset.rail === id));
         }
       });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
     sections.forEach(s => spy.observe(s));
   }
 
-  // ---------------- Custom cursor ----------------
-  function initCursor(){
-    const dot = document.getElementById('cursorDot');
-    if(!dot) return;
-    window.addEventListener('mousemove', (e) => {
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => dot.classList.add('big'));
-      el.addEventListener('mouseleave', () => dot.classList.remove('big'));
-    });
-  }
-
-  // ---------------- Work accordion ----------------
-  function initWork(){
-    document.querySelectorAll('[data-toggle]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.work-item');
-        const wasOpen = item.classList.contains('open');
-        document.querySelectorAll('.work-item').forEach(i => i.classList.remove('open'));
-        if(!wasOpen) item.classList.add('open');
-      });
-    });
-  }
+  initReveal();
+  initSpy();
 </script>
 </body>
 </html>
